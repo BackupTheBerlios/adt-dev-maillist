@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C9349D9B1-558A-4136-B1CE-7BCC0F9A3E37%40dribin.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT Ideas</H1>
+    <B>Dave Dribin</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C9349D9B1-558A-4136-B1CE-7BCC0F9A3E37%40dribin.org%3E"
+       TITLE="[adt-dev] ADT Ideas">dave-ml at dribin.org
+       </A><BR>
+    <I>Mon Jan  2 23:03:44 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[adt-dev] ADT Ideas
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 2, 2006, at 2:02 PM, Ed Eastman wrote:
+&gt;<i> It should also be noted that the windows and Apple versions of the  
+</I>&gt;<i> software have remained backwards compatible with other version  
+</I>&gt;<i> since 1.21? where a major compression algorithm was added.
+</I>
+Yeah, the fact that newer PC-side versions are backwards compatible  
+with older Apple II side was my main motivation for splitting the zip  
+file up.
+
+&gt;<i> That being said, I think it is a great idea to make distribution  
+</I>&gt;<i> modules for each platform that include the latest AppleII version  
+</I>&gt;<i> for each.
+</I>&gt;<i>
+</I>&gt;<i> [ .. snip .. ]
+</I>&gt;<i>
+</I>&gt;<i> The distribution will make sure they are compatible or else they  
+</I>&gt;<i> should not be included for that platform.  (It seems a bit verbose  
+</I>&gt;<i> but does it make sense?)
+</I>&gt;<i>
+</I>&gt;<i> No other modules including a a pure A2 version should be  
+</I>&gt;<i> necessary.  But each distribution module should contain whatever is  
+</I>&gt;<i> supported, including all the A2 versions.
+</I>
+I can see that perspective.  I think the naming convention of  
+ADT_XXXX.zip where XXXX is the year very poor, though.  Maybe this  
+becomes the version number, and then the version number of the A2  
+client gets bumped, even if there is no change.  Compatibility is  
+determined by version.  Thus, ADT_1.23.zip contains ADTWin v1.23,  
+ADTss v1.23, and ADTcc v1.23.   This results in possibility of ADTcc  
+v1.22 being exactly the same as ADTcc v1.23, but at least everything  
+in the zip file is named in a consistent way.  I still think this is  
+less flexible than the separation I was proposing, but at least it's  
+not quite as confusing.
+
+&gt;<i> I think that if the ADT and SST can not be 'easily' combined into  
+</I>&gt;<i> one A2 client, then they should remain separate and so should the  
+</I>&gt;<i> Other platform.  So you'd have ADTWin with ADTApple2(s) and SSTWin  
+</I>&gt;<i> with SSTApple2 in one distribution, for example.
+</I>
+This becomes confusing to the user, though.  Why should &quot;Other&quot; be  
+separate?  And why must we force separate ADT and SST PC-side  
+software?  They're 99% the same.  I was    planning for ADTWin and  
+SSTWin to be the same program, for example.
+
+The way I keep thinking about this is in terms of a protocol with  
+clients and servers.   Clients and servers interact, so long as they  
+speak the same protocol.  Clients and servers are developed and  
+released independently, as improvements related to each occur.  The  
+protocol stays constant.  As such, ADT is a protocol.  There may be  
+more than one version of the protocol (pre-1.21 and post 1.22, for  
+example), and future changes in protocol could be handled in a better  
+way to ensure compatibility.  But this perspective does allow more  
+flexibility.  And I don't think it's that much more confusing to the  
+end user.  They just need to download 2 files, instead of one.
+
+Just my $.02... :)  Once I get ADT/SST far enough, maybe I'll try to  
+implement this,  and see if it confuses people.
+
+-Dave
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[adt-dev] ADT Ideas
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

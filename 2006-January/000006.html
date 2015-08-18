@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3CC8A1C3C4-F13B-48BC-94CE-C98C2AFC2342%40dribin.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000005.html">
+   <LINK REL="Next"  HREF="000007.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT Ideas</H1>
+    <B>Dave Dribin</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3CC8A1C3C4-F13B-48BC-94CE-C98C2AFC2342%40dribin.org%3E"
+       TITLE="[adt-dev] ADT Ideas">dave-ml at dribin.org
+       </A><BR>
+    <I>Tue Jan  3 04:52:26 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000005.html">[adt-dev] ADT Ideas
+</A></li>
+        <LI>Next message: <A HREF="000007.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 2, 2006, at 6:36 PM, Knut Roll-Lund wrote:
+&gt;<i> I mean that if the protocol changes we &quot;up&quot; a major version, go to  
+</I>&gt;<i> 2.00 actually we might want to use 3 numbers, the first for  
+</I>&gt;<i> protocol, the second for functionality and the third for bugfixes  
+</I>&gt;<i> (like my last release).
+</I>
+That sounds like a decent way to go, for now.
+
+&gt;<i> Actually I don't yet have much information about this ADT-SST is  
+</I>&gt;<i> going to work... Is it going to deal with nib files or with dual  
+</I>&gt;<i> dsk files like SST or a new format, an SST dual disk image?
+</I>
+It's a modification of SST.  Instead of writing the raw nibbles to  
+two DOS 3.3 disks, it will send them over the serial port.  The PC- 
+side program will be able to create .NIB files directly.  No creating  
+of two disks.  No transferring these disks using ADT.  And no need to  
+run SST in an emulator.  I've added a new command.  The current ADT  
+protocol has two commands: 'S' or an 'R' for sending and receiving  
+disks, respectively.  I've added a new command: 'T' which sends  
+a .NIB disk.  This makes it a completely backwards compatible  
+extension to the ADT protocol.
+
+&gt;<i> Is there a relationship between nib and SST? I was told that the  
+</I>&gt;<i> nib format came from a copyprogram but when it doesn't have the  
+</I>&gt;<i> sync information is this something that was dropped/lost when the  
+</I>&gt;<i> nib format was created? Please tell me more.
+</I>
+I don't know exactly when .NIB files were introduced and if they were  
+created in conjunction with SST, but .NIB files contain the raw  
+nibble data, per track.  As far as I know, it does not keep the sync  
+information.  This makes it impossible to go from .NIB back to disk,  
+unfortunately.  SST does keep the sync information, so this is  
+limitation of the .NIB file format.  Also, .NIB files cannot handle  
+other, more complicated disk structures like half tracks, quarter  
+tracks, and track synchronization.  If there were such a format  
+available that was supported by emulators, SST would be able to  
+support it.
+
+BTW, I'm calling the ADT/SST merger SADT for &quot;Super ADT&quot;.
+
+&gt;<i> I think making it cross-platform will create endless problems and  
+</I>&gt;<i> is thus a waste of time. If I make a change and test this for  
+</I>&gt;<i> windows and dos how can I check that my change is valid for linux  
+</I>&gt;<i> and mac? Did you notice how much interest there was when it was  
+</I>&gt;<i> requested a baudrate upping also for the mac version? or the gs  
+</I>&gt;<i> version? I think the platforms must live their own lives.
+</I>
+Well, I wasn't around to test a Mac version. :)  And besides, there  
+really is no working Mac or Linux version to modify.  There are 2  
+versions of ADT for Unix floating out there.  Both are based off DOS  
+ADT, and both versions are a mess (see below).  One doesn't support  
+receiving disks, and one doesn't compile on OS X.  So, really, there  
+is no Mac version for someone to &quot;add&quot; 115K support to.  I would have  
+to start from scratch.
+
+&gt;<i> I must admit I don't like C++. This is because it typically makes  
+</I>&gt;<i> the code less readable by obscuring how things connect  
+</I>&gt;<i> (abstracting). I realize that there are many tools that might help  
+</I>&gt;<i> figuring such out (the later visual studio's are pretty  
+</I>&gt;<i> intelligent). People always make &quot;spaghetti&quot; code and C++ makes it  
+</I>&gt;<i> worse.
+</I>&gt;<i>
+</I>&gt;<i> I don't like heavily IFDEF'ed code. I deal with cross-platform  
+</I>&gt;<i> development at work and it is a pain. We generate unreadable code  
+</I>&gt;<i> because of macros. Sometimes we make changes that break another  
+</I>&gt;<i> platform without realizing and end up wasting time on debugging. It  
+</I>&gt;<i> is better that the only common thing is the protocol...
+</I>
+Well, in my opinion, spaghetti code has nothing to do with the  
+language, and all to do with the programmer's use of a language.  For  
+example, take the ADT for Unix code.  It's C, and it's a mess of  
+#ifdef's and spaghetti code.  Well designed C++ makes abstracting  
+things like cross platform differences *without* spaghetti code and  
+differences.  I've seen it done, and it can be pretty.  Needless to  
+say, if all you've seen is bas C++ code, you're just going to have to  
+trust me on this. :)  Hopefully, once you see what I have you'll  
+change your opinion.
+
+&gt;<i> Dos ca65 work flawlessly (my experience is with sdcc for Z80; bad  
+</I>&gt;<i> such)?
+</I>
+Yup.  More than flawlessly.  It's awesome. :)  It's stable, actively  
+developed, and cross platform.  I'll post the ca65 version of  
+adt.asm, so you can see for yourself.
+
+&gt;<i> Just wondering; has anyone made an ansi c function library for  
+</I>&gt;<i> Apple2 DOS3.3 and/or ProDOS on cc65? Did download it a while ago  
+</I>&gt;<i> but haven't had time to look at it yet.
+</I>
+It doesn't have any DOS or ProDOS libraries.  Actually, the Apple2  
+library for cc65 is pretty weak.  But the compiler and assembler  
+itself are solid.  The thing is, if there *were* a serial library, it  
+could be shared in ADT and SADT.  Even if it weren't reusable to  
+other projects, it's possible to create
+
+&gt;<i> BTW shouldn't we invite also Linards Ticmanis &quot;ticmanis at gmx dot  
+</I>&gt;<i> de&quot; he has made the 13 sector ADT.
+</I>
+Sure, go ahead.  What is this 13 sector ADT?
+
+&gt;<i> Well, there were some opinions, the only point I'm really going to  
+</I>&gt;<i> fight for is that we use version numbers so that there will be no  
+</I>&gt;<i> confusion about what is what.
+</I>
+I appreciate the input, so thanks for talking the time to respond!
+
+-Dave
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000005.html">[adt-dev] ADT Ideas
+</A></li>
+	<LI>Next message: <A HREF="000007.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

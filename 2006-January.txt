@@ -1,0 +1,1508 @@
+From dave-ml at dribin.org  Sun Jan  1 22:14:36 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Sun, 1 Jan 2006 15:14:36 -0600
+Subject: [adt-dev] Test
+Message-ID: <6E97A28C-EACA-46F8-8E45-C97E0CC19A0A@dribin.org>
+
+Test.
+
+
+
+From kr-lund at online.no  Mon Jan  2 02:21:30 2006
+From: kr-lund at online.no (Knut Roll-Lund)
+Date: Mon, 02 Jan 2006 02:21:30 +0100
+Subject: [adt-dev] Re: adt-dev -- confirmation of subscription -- request 807393
+In-Reply-To: <20060102005107.25150.43575.Mailman@bat.berlios.de>
+References: <20060102005107.25150.43575.Mailman@bat.berlios.de>
+Message-ID: <43B8801A.3070708@online.no>
+
+adt-dev-request at berlios.de wrote:
+
+>adt-dev -- confirmation of subscription -- request 807393
+>
+>We have received a request from 85.166.125.81 for subscription of your
+>email address, <kr-lund at online.no>, to the adt-dev at lists.berlios.de
+>mailing list.  To confirm the request, please send a message to
+>adt-dev-request at lists.berlios.de, and either:
+>
+>- maintain the subject line as is (the reply's additional "Re:" is
+>ok),
+>
+>- or include the following line - and only the following line - in the
+>message body: 
+>
+>confirm 807393
+>
+>(Simply sending a 'reply' to this message should work from most email
+>interfaces, since that usually leaves the subject line in the right
+>form.)
+>
+>If you do not wish to subscribe to this list, please simply disregard
+>this message.  Send questions to adt-dev-admin at lists.berlios.de.
+>
+>
+>
+>  
+>
+
+
+
+From dave-ml at dribin.org  Mon Jan  2 16:22:54 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Mon, 2 Jan 2006 09:22:54 -0600
+Subject: [adt-dev] ADT Ideas
+Message-ID: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org>
+
+Ed and Knut,
+
+Thanks for joining the list!  I've been following ADT development for  
+the last month or so, since I've been developing an ADT/SST merger.   
+Given that there is now fairly active development going on between  
+the 3 of us, here are some ideas I've been thinking about that will  
+help us work together and coordinate our efforts:
+
+Splitting ADT_XXXX.zip into multiple files
+==========================================
+
+The current method of distribution, by that I mean files like  
+ADT_2005_2.zip, is confusing and inflexible.  It's confusing for the  
+user, since it's hard to tell which version of ADT is included.  Is  
+it 1.23?  Or 1.21?  It's a pain for developers to release new  
+versions.  If a new version of ADTWin needs to be released, why  
+include all the other components that have not changes?  Thus, I  
+think it would be better to have multiple zip files for download.  I  
+propose one for each Apple II program, and one for each PC side  
+program.  Given the current versions of the components as of today,  
+this would result in the following zip files:
+
+Apple II components:
+
+- adt-ssc-1.23.zip: Contains SSC version of adt.dmp (with 115K  
+support) and source code.
+
+- adt-cc-1.21.zip: Contains ADTcc.dmp and code.
+
+- adt-gs-0.91.zip: Contains ADTgs.dmp.
+
+PC components:
+
+- adt123.zip: Contains adtdos.exe (with 115K support).
+
+- adt-win-1.23.2.zip: Contains adtwin.exe (with 115K support and long  
+file name fixes).
+
+Doing a split like this makes it easier to do updates like the ones  
+recently done by Knut and my SST updates.  It also makes it easier to  
+put this code into a source code repository, like Subversion.  Which  
+leads me to:
+
+Put All ADT Source Code Into Subversion
+=======================================
+
+Using a source code control tool like Subversion or CVS is nearly  
+essential when multiple developers are involved.  Without them,  
+people are constantly overwriting other's changes.
+
+I've been using Subversion a lot at my "real job" and it's awesome.   
+This is why I chose BerliOS, too.
+
+Using a Cross Assembler for Apple II Software
+=============================================
+
+The code for ADTssc and ADTcc are in Merlin assembler.  I think  
+converting these to a cross assembler so that developement code be  
+done on a PC/Mac has number of advantages:
+
+- Faster: Running an assembler on modern hardware is *fast*.
+
+- Easier: I can use a modern text editor.
+
+- More flexible: Modern assemblers allow splitting programs into  
+multiple files and have the concept of "libraries".  Multiple files  
+also help when multiple developers are involved.
+
+- Makes some debugging easier: I can assembly on my PC/Mac and then  
+run the binary in an emulator.
+
+I've already converted adt.asm into an assembly file that is usable  
+by ca65, which is the assembler component of cc65:
+
+   http://www.cc65.org/
+
+Redesign of PC-Side Software
+============================
+
+There are currently two "official" PC-side programs: adtdos.exe and  
+adt.exe.  Unfortunately, there is very little code sharing between  
+them.  And this also excludes other platforms like Linux and Mac OS  
+X.  The current code is currently not flexible enough to support this  
+kind of abstraction.  It really needs to be completely restructured  
+from scratch.
+
+For my ADT/SST merger, I've already done a fair amount of this  
+restructuring.  One major change I did was to use C++ instead of C.   
+All platforms we're targeting, including DOS, have good C++ compilers  
+available.  C++ provides a lot more flexibility on code structure in  
+my opinion, so I sort of made an executive decision to use it over  
+C.  Also, using C++ will help us implement my next idea:  I'd also  
+like ADTWin to use wxWidgets for it's GUI:
+
+   http://www.wxwidgets.org/
+
+wxWidgets is a cross-platform, open source GUI library, available for  
+Windows, Unix, and OS X.  Using wxWidgets for ADTWin would  
+automatically give use GUIs for Linux and OS X.  I've used wxWidgets  
+before, and the ADT GUI is a perfect use for it.
+
+Conclusion
+==========
+
+Okay, I know this is a lot of information.  If you manage to read all  
+this, please let me know what you think.
+
+-Dave
+
+
+
+From eeastman at gmail.com  Mon Jan  2 21:02:24 2006
+From: eeastman at gmail.com (Ed Eastman)
+Date: Mon, 02 Jan 2006 14:02:24 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org>
+Message-ID: <43B986D0.3020100@gmail.com>
+
+Dave:
+Your ideas hold merit.  But just a brief background about why it has 
+developed as it has is because the the version's change only included 
+the Windows and Apple version.
+
+It should also be noted that the windows and Apple versions of the 
+software have remained backwards compatible with other version since 
+1.21? where a major compression algorithm was added.
+
+I did emphasize when Knut was developing that the docs need to be 
+updated to reflect this and to make certain that it was mentioned.
+
+That being said, I think it is a great idea to make distribution modules 
+for each platform that include the latest AppleII version for each.  No 
+other modules including a a pure A2 version should be necessary.  But 
+each distribution module should contain whatever is supported, including 
+all the A2 versions.
+
+SSC & IIgs & other with source code and whatever in each folder as they 
+have been done in the past is good, regardless of the version.  Each one 
+has different capabilities and should have their own version numbers. 
+As long as the newer versions remain compatible, it makes no difference 
+if you use the latest Windows version with an older ADT121, they still 
+interact.  The distribution will make sure they are compatible or else 
+they should not be included for that platform.  (It seems a bit verbose 
+but does it make sense?)
+
+I think that if the ADT and SST can not be 'easily' combined into one A2 
+client, then they should remain separate and so should the Other 
+platform.  So you'd have ADTWin with ADTApple2(s) and SSTWin with 
+SSTApple2 in one distribution, for example.
+
+Just make sure to document it all as best as you can to avoid confusion.
+
+Thankx,
+Ed
+
+
+Dave Dribin wrote:
+> Ed and Knut,
+> 
+> Thanks for joining the list!  I've been following ADT development for  
+> the last month or so, since I've been developing an ADT/SST merger.   
+> Given that there is now fairly active development going on between  the 
+> 3 of us, here are some ideas I've been thinking about that will  help us 
+> work together and coordinate our efforts:
+> 
+> Splitting ADT_XXXX.zip into multiple files
+> ==========================================
+> 
+> The current method of distribution, by that I mean files like  
+> ADT_2005_2.zip, is confusing and inflexible.  It's confusing for the  
+> user, since it's hard to tell which version of ADT is included.  Is  it 
+> 1.23?  Or 1.21?  It's a pain for developers to release new  versions.  
+> If a new version of ADTWin needs to be released, why  include all the 
+> other components that have not changes?  Thus, I  think it would be 
+> better to have multiple zip files for download.  I  propose one for each 
+> Apple II program, and one for each PC side  program.  Given the current 
+> versions of the components as of today,  this would result in the 
+> following zip files:
+> 
+> Apple II components:
+> 
+> - adt-ssc-1.23.zip: Contains SSC version of adt.dmp (with 115K  support) 
+> and source code.
+> 
+> - adt-cc-1.21.zip: Contains ADTcc.dmp and code.
+> 
+> - adt-gs-0.91.zip: Contains ADTgs.dmp.
+> 
+> PC components:
+> 
+> - adt123.zip: Contains adtdos.exe (with 115K support).
+> 
+> - adt-win-1.23.2.zip: Contains adtwin.exe (with 115K support and long  
+> file name fixes).
+> 
+> Doing a split like this makes it easier to do updates like the ones  
+> recently done by Knut and my SST updates.  It also makes it easier to  
+> put this code into a source code repository, like Subversion.  Which  
+> leads me to:
+> 
+> Put All ADT Source Code Into Subversion
+> =======================================
+> 
+> Using a source code control tool like Subversion or CVS is nearly  
+> essential when multiple developers are involved.  Without them,  people 
+> are constantly overwriting other's changes.
+> 
+> I've been using Subversion a lot at my "real job" and it's awesome.   
+> This is why I chose BerliOS, too.
+> 
+> Using a Cross Assembler for Apple II Software
+> =============================================
+> 
+> The code for ADTssc and ADTcc are in Merlin assembler.  I think  
+> converting these to a cross assembler so that developement code be  done 
+> on a PC/Mac has number of advantages:
+> 
+> - Faster: Running an assembler on modern hardware is *fast*.
+> 
+> - Easier: I can use a modern text editor.
+> 
+> - More flexible: Modern assemblers allow splitting programs into  
+> multiple files and have the concept of "libraries".  Multiple files  
+> also help when multiple developers are involved.
+> 
+> - Makes some debugging easier: I can assembly on my PC/Mac and then  run 
+> the binary in an emulator.
+> 
+> I've already converted adt.asm into an assembly file that is usable  by 
+> ca65, which is the assembler component of cc65:
+> 
+>   http://www.cc65.org/
+> 
+> Redesign of PC-Side Software
+> ============================
+> 
+> There are currently two "official" PC-side programs: adtdos.exe and  
+> adt.exe.  Unfortunately, there is very little code sharing between  
+> them.  And this also excludes other platforms like Linux and Mac OS  X.  
+> The current code is currently not flexible enough to support this  kind 
+> of abstraction.  It really needs to be completely restructured  from 
+> scratch.
+> 
+> For my ADT/SST merger, I've already done a fair amount of this  
+> restructuring.  One major change I did was to use C++ instead of C.   
+> All platforms we're targeting, including DOS, have good C++ compilers  
+> available.  C++ provides a lot more flexibility on code structure in  my 
+> opinion, so I sort of made an executive decision to use it over  C.  
+> Also, using C++ will help us implement my next idea:  I'd also  like 
+> ADTWin to use wxWidgets for it's GUI:
+> 
+>   http://www.wxwidgets.org/
+> 
+> wxWidgets is a cross-platform, open source GUI library, available for  
+> Windows, Unix, and OS X.  Using wxWidgets for ADTWin would  
+> automatically give use GUIs for Linux and OS X.  I've used wxWidgets  
+> before, and the ADT GUI is a perfect use for it.
+> 
+> Conclusion
+> ==========
+> 
+> Okay, I know this is a lot of information.  If you manage to read all  
+> this, please let me know what you think.
+> 
+> -Dave
+> 
+> _______________________________________________
+> adt-dev mailing list
+> adt-dev at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/adt-dev
+> 
+
+
+From dave-ml at dribin.org  Mon Jan  2 23:03:44 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Mon, 2 Jan 2006 16:03:44 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <43B986D0.3020100@gmail.com>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com>
+Message-ID: <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org>
+
+On Jan 2, 2006, at 2:02 PM, Ed Eastman wrote:
+> It should also be noted that the windows and Apple versions of the  
+> software have remained backwards compatible with other version  
+> since 1.21? where a major compression algorithm was added.
+
+Yeah, the fact that newer PC-side versions are backwards compatible  
+with older Apple II side was my main motivation for splitting the zip  
+file up.
+
+> That being said, I think it is a great idea to make distribution  
+> modules for each platform that include the latest AppleII version  
+> for each.
+>
+> [ .. snip .. ]
+>
+> The distribution will make sure they are compatible or else they  
+> should not be included for that platform.  (It seems a bit verbose  
+> but does it make sense?)
+>
+> No other modules including a a pure A2 version should be  
+> necessary.  But each distribution module should contain whatever is  
+> supported, including all the A2 versions.
+
+I can see that perspective.  I think the naming convention of  
+ADT_XXXX.zip where XXXX is the year very poor, though.  Maybe this  
+becomes the version number, and then the version number of the A2  
+client gets bumped, even if there is no change.  Compatibility is  
+determined by version.  Thus, ADT_1.23.zip contains ADTWin v1.23,  
+ADTss v1.23, and ADTcc v1.23.   This results in possibility of ADTcc  
+v1.22 being exactly the same as ADTcc v1.23, but at least everything  
+in the zip file is named in a consistent way.  I still think this is  
+less flexible than the separation I was proposing, but at least it's  
+not quite as confusing.
+
+> I think that if the ADT and SST can not be 'easily' combined into  
+> one A2 client, then they should remain separate and so should the  
+> Other platform.  So you'd have ADTWin with ADTApple2(s) and SSTWin  
+> with SSTApple2 in one distribution, for example.
+
+This becomes confusing to the user, though.  Why should "Other" be  
+separate?  And why must we force separate ADT and SST PC-side  
+software?  They're 99% the same.  I was    planning for ADTWin and  
+SSTWin to be the same program, for example.
+
+The way I keep thinking about this is in terms of a protocol with  
+clients and servers.   Clients and servers interact, so long as they  
+speak the same protocol.  Clients and servers are developed and  
+released independently, as improvements related to each occur.  The  
+protocol stays constant.  As such, ADT is a protocol.  There may be  
+more than one version of the protocol (pre-1.21 and post 1.22, for  
+example), and future changes in protocol could be handled in a better  
+way to ensure compatibility.  But this perspective does allow more  
+flexibility.  And I don't think it's that much more confusing to the  
+end user.  They just need to download 2 files, instead of one.
+
+Just my $.02... :)  Once I get ADT/SST far enough, maybe I'll try to  
+implement this,  and see if it confuses people.
+
+-Dave
+
+
+
+From kr-lund at online.no  Tue Jan  3 01:36:27 2006
+From: kr-lund at online.no (Knut Roll-Lund)
+Date: Tue, 03 Jan 2006 01:36:27 +0100
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org>
+Message-ID: <43B9C70B.2090509@online.no>
+
+Dave Dribin wrote:
+
+> On Jan 2, 2006, at 2:02 PM, Ed Eastman wrote:
+>
+>> It should also be noted that the windows and Apple versions of the  
+>> software have remained backwards compatible with other version  since 
+>> 1.21? where a major compression algorithm was added.
+>
+>
+> Yeah, the fact that newer PC-side versions are backwards compatible  
+> with older Apple II side was my main motivation for splitting the zip  
+> file up.
+
+I think it is better for the user to get a functioning package. I would 
+rather give the package a proper version number (I broke the old year 
+based one by releasing another 2005... didn't want to postpone the 
+problem to 2006)
+
+>> That being said, I think it is a great idea to make distribution  
+>> modules for each platform that include the latest AppleII version  
+>> for each.
+>>
+>> [ .. snip .. ]
+>>
+>> The distribution will make sure they are compatible or else they  
+>> should not be included for that platform.  (It seems a bit verbose  
+>> but does it make sense?)
+>>
+>> No other modules including a a pure A2 version should be  necessary.  
+>> But each distribution module should contain whatever is  supported, 
+>> including all the A2 versions.
+>
+>
+> I can see that perspective.  I think the naming convention of  
+> ADT_XXXX.zip where XXXX is the year very poor, though.  Maybe this  
+> becomes the version number, and then the version number of the A2  
+> client gets bumped, even if there is no change.  Compatibility is  
+> determined by version.  Thus, ADT_1.23.zip contains ADTWin v1.23,  
+> ADTss v1.23, and ADTcc v1.23.   This results in possibility of ADTcc  
+> v1.22 being exactly the same as ADTcc v1.23, but at least everything  
+> in the zip file is named in a consistent way.  I still think this is  
+> less flexible than the separation I was proposing, but at least it's  
+> not quite as confusing.
+
+
+I mean that if the protocol changes we "up" a major version, go to 2.00 
+actually we might want to use 3 numbers, the first for protocol, the 
+second for functionality and the third for bugfixes (like my last release).
+
+>> I think that if the ADT and SST can not be 'easily' combined into  
+>> one A2 client, then they should remain separate and so should the  
+>> Other platform.  So you'd have ADTWin with ADTApple2(s) and SSTWin  
+>> with SSTApple2 in one distribution, for example.
+>
+>
+> This becomes confusing to the user, though.  Why should "Other" be  
+> separate?  And why must we force separate ADT and SST PC-side  
+> software?  They're 99% the same.  I was    planning for ADTWin and  
+> SSTWin to be the same program, for example.
+>
+> The way I keep thinking about this is in terms of a protocol with  
+> clients and servers.   Clients and servers interact, so long as they  
+> speak the same protocol.  Clients and servers are developed and  
+> released independently, as improvements related to each occur.  The  
+> protocol stays constant.  As such, ADT is a protocol.  There may be  
+> more than one version of the protocol (pre-1.21 and post 1.22, for  
+> example), and future changes in protocol could be handled in a better  
+> way to ensure compatibility.  But this perspective does allow more  
+> flexibility.  And I don't think it's that much more confusing to the  
+> end user.  They just need to download 2 files, instead of one.
+>
+> Just my $.02... :)  Once I get ADT/SST far enough, maybe I'll try to  
+> implement this,  and see if it confuses people.
+
+
+I would think that if it can be combined seamlessly for the user it can 
+be the same.
+
+Actually I don't yet have much information about this ADT-SST is going 
+to work... Is it going to deal with nib files or with dual dsk files 
+like SST or a new format, an SST dual disk image? Is there a 
+relationship between nib and SST? I was told that the nib format came 
+from a copyprogram but when it doesn't have the sync information is this 
+something that was dropped/lost when the nib format was created? Please 
+tell me more.
+
+from the first message by Dave:
+
+> For my ADT/SST merger, I've already done a fair amount of this  
+> restructuring.  One major change I did was to use C++ instead of C.   
+> All platforms we're targeting, including DOS, have good C++ compilers  
+> available.  C++ provides a lot more flexibility on code structure in  
+> my opinion, so I sort of made an executive decision to use it over  
+> C.  Also, using C++ will help us implement my next idea:  I'd also  
+> like ADTWin to use wxWidgets for it's GUI:
+>
+>   http://www.wxwidgets.org/
+>
+> wxWidgets is a cross-platform, open source GUI library, available for  
+> Windows, Unix, and OS X.  Using wxWidgets for ADTWin would  
+> automatically give use GUIs for Linux and OS X.  I've used wxWidgets  
+> before, and the ADT GUI is a perfect use for it.
+
+I think making it cross-platform will create endless problems and is 
+thus a waste of time. If I make a change and test this for windows and 
+dos how can I check that my change is valid for linux and mac? Did you 
+notice how much interest there was when it was requested a baudrate 
+upping also for the mac version? or the gs version? I think the 
+platforms must live their own lives.
+
+It seems that it was the intention of the creator of ADTwin that he 
+would also create the dos version by applying a define. I don't know if 
+this works or why it is not used. Maybe it is much larger than the 
+original dos code... ADTwin is C++ but maybe not taken to its full 
+potential... I must admit I don't like C++. This is because it typically 
+makes the code less readable by obscuring how things connect 
+(abstracting). I realize that there are many tools that might help 
+figuring such out (the later visual studio's are pretty intelligent). 
+People always make "spaghetti" code and C++ makes it worse.
+
+I don't like heavily IFDEF'ed code. I deal with cross-platform 
+development at work and it is a pain. We generate unreadable code 
+because of macros. Sometimes we make changes that break another platform 
+without realizing and end up wasting time on debugging. It is better 
+that the only common thing is the protocol...
+
+About ca65 conversion, I find it is pretty convenient to develop using 
+merlin too, I edit in my favorite editor on the pc, transfers to a disk 
+image and compiles in an emulator, not a slow process at all. The 
+slowest part is to ADT the disk over to test the result on the real 
+machine. With 155200 baud that isn't horribly slow either. Dos ca65 work 
+flawlessly (my experience is with sdcc for Z80; bad such)? Just 
+wondering; has anyone made an ansi c function library for Apple2 DOS3.3 
+and/or ProDOS on cc65? Did download it a while ago but haven't had time 
+to look at it yet.
+
+BTW shouldn't we invite also Linards Ticmanis "ticmanis at gmx dot de" 
+he has made the 13 sector ADT.
+
+Well, there were some opinions, the only point I'm really going to fight 
+for is that we use version numbers so that there will be no confusion 
+about what is what.
+
+Knut
+
+
+From dave-ml at dribin.org  Tue Jan  3 04:52:26 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Mon, 2 Jan 2006 21:52:26 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <43B9C70B.2090509@online.no>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no>
+Message-ID: <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org>
+
+On Jan 2, 2006, at 6:36 PM, Knut Roll-Lund wrote:
+> I mean that if the protocol changes we "up" a major version, go to  
+> 2.00 actually we might want to use 3 numbers, the first for  
+> protocol, the second for functionality and the third for bugfixes  
+> (like my last release).
+
+That sounds like a decent way to go, for now.
+
+> Actually I don't yet have much information about this ADT-SST is  
+> going to work... Is it going to deal with nib files or with dual  
+> dsk files like SST or a new format, an SST dual disk image?
+
+It's a modification of SST.  Instead of writing the raw nibbles to  
+two DOS 3.3 disks, it will send them over the serial port.  The PC- 
+side program will be able to create .NIB files directly.  No creating  
+of two disks.  No transferring these disks using ADT.  And no need to  
+run SST in an emulator.  I've added a new command.  The current ADT  
+protocol has two commands: 'S' or an 'R' for sending and receiving  
+disks, respectively.  I've added a new command: 'T' which sends  
+a .NIB disk.  This makes it a completely backwards compatible  
+extension to the ADT protocol.
+
+> Is there a relationship between nib and SST? I was told that the  
+> nib format came from a copyprogram but when it doesn't have the  
+> sync information is this something that was dropped/lost when the  
+> nib format was created? Please tell me more.
+
+I don't know exactly when .NIB files were introduced and if they were  
+created in conjunction with SST, but .NIB files contain the raw  
+nibble data, per track.  As far as I know, it does not keep the sync  
+information.  This makes it impossible to go from .NIB back to disk,  
+unfortunately.  SST does keep the sync information, so this is  
+limitation of the .NIB file format.  Also, .NIB files cannot handle  
+other, more complicated disk structures like half tracks, quarter  
+tracks, and track synchronization.  If there were such a format  
+available that was supported by emulators, SST would be able to  
+support it.
+
+BTW, I'm calling the ADT/SST merger SADT for "Super ADT".
+
+> I think making it cross-platform will create endless problems and  
+> is thus a waste of time. If I make a change and test this for  
+> windows and dos how can I check that my change is valid for linux  
+> and mac? Did you notice how much interest there was when it was  
+> requested a baudrate upping also for the mac version? or the gs  
+> version? I think the platforms must live their own lives.
+
+Well, I wasn't around to test a Mac version. :)  And besides, there  
+really is no working Mac or Linux version to modify.  There are 2  
+versions of ADT for Unix floating out there.  Both are based off DOS  
+ADT, and both versions are a mess (see below).  One doesn't support  
+receiving disks, and one doesn't compile on OS X.  So, really, there  
+is no Mac version for someone to "add" 115K support to.  I would have  
+to start from scratch.
+
+> I must admit I don't like C++. This is because it typically makes  
+> the code less readable by obscuring how things connect  
+> (abstracting). I realize that there are many tools that might help  
+> figuring such out (the later visual studio's are pretty  
+> intelligent). People always make "spaghetti" code and C++ makes it  
+> worse.
+>
+> I don't like heavily IFDEF'ed code. I deal with cross-platform  
+> development at work and it is a pain. We generate unreadable code  
+> because of macros. Sometimes we make changes that break another  
+> platform without realizing and end up wasting time on debugging. It  
+> is better that the only common thing is the protocol...
+
+Well, in my opinion, spaghetti code has nothing to do with the  
+language, and all to do with the programmer's use of a language.  For  
+example, take the ADT for Unix code.  It's C, and it's a mess of  
+#ifdef's and spaghetti code.  Well designed C++ makes abstracting  
+things like cross platform differences *without* spaghetti code and  
+differences.  I've seen it done, and it can be pretty.  Needless to  
+say, if all you've seen is bas C++ code, you're just going to have to  
+trust me on this. :)  Hopefully, once you see what I have you'll  
+change your opinion.
+
+> Dos ca65 work flawlessly (my experience is with sdcc for Z80; bad  
+> such)?
+
+Yup.  More than flawlessly.  It's awesome. :)  It's stable, actively  
+developed, and cross platform.  I'll post the ca65 version of  
+adt.asm, so you can see for yourself.
+
+> Just wondering; has anyone made an ansi c function library for  
+> Apple2 DOS3.3 and/or ProDOS on cc65? Did download it a while ago  
+> but haven't had time to look at it yet.
+
+It doesn't have any DOS or ProDOS libraries.  Actually, the Apple2  
+library for cc65 is pretty weak.  But the compiler and assembler  
+itself are solid.  The thing is, if there *were* a serial library, it  
+could be shared in ADT and SADT.  Even if it weren't reusable to  
+other projects, it's possible to create
+
+> BTW shouldn't we invite also Linards Ticmanis "ticmanis at gmx dot  
+> de" he has made the 13 sector ADT.
+
+Sure, go ahead.  What is this 13 sector ADT?
+
+> Well, there were some opinions, the only point I'm really going to  
+> fight for is that we use version numbers so that there will be no  
+> confusion about what is what.
+
+I appreciate the input, so thanks for talking the time to respond!
+
+-Dave
+
+
+
+From dave-ml at dribin.org  Tue Jan  3 06:15:22 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Mon, 2 Jan 2006 23:15:22 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org>
+Message-ID: <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org>
+
+On Jan 2, 2006, at 9:52 PM, Dave Dribin wrote:
+> I'll post the ca65 version of adt.asm, so you can see for yourself.
+
+I've attached a zip file that contains two files: adt.a65 and  
+merlin.inc.  You can assemble and link with the following command:
+
+   cl65 -t none adt.a65
+
+Or, you can type "make" if you have GNU make and Ruby available.
+
+> It doesn't have any DOS or ProDOS libraries.  Actually, the Apple2  
+> library for cc65 is pretty weak.  But the compiler and assembler  
+> itself are solid.  The thing is, if there *were* a serial library,  
+> it could be shared in ADT and SADT.  Even if it weren't reusable to  
+> other projects, it's possible to create
+
+Whoops.. I never finished that sentence. :)  What I was trying to get  
+as was that the SSC assembly code could be put into a library and  
+shared between ADT and SADT.  That's something that's way in the  
+future.  But I like to think big. :)
+
+-Dave
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: adt-cc65.zip
+Type: application/zip
+Size: 24797 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/adt-dev/attachments/20060102/392f6ecf/attachment.zip>
+
+From kr-lund at online.no  Tue Jan  3 11:34:47 2006
+From: kr-lund at online.no (Knut Roll-lund)
+Date: Tue, 3 Jan 2006 11:34:47 +0100 (CET)
+Subject: [adt-dev] ADT13
+In-Reply-To: <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> 
+ <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org>
+Message-ID: <22749224.1136284487255.JavaMail.adm-moff@moffice6.nsc.no>
+
+> > BTW shouldn't we invite also Linards Ticmanis "ticmanis at gmx dot  
+> > de" he has made the 13 sector ADT.
+> 
+> Sure, go ahead.  What is this 13 sector ADT?
+
+It is an ADT for DOS3.2 floppies (I believe, some games) that is formated with 13 sector tracks instead of the DOS3.3's 16 sectors per tracks. I believe it is a "hacked" software, so no source exists... and no windows version.
+
+I observed this on c.s.a2 end of november 2005 and communicated a little with Linards because he was interested in the 115200 baud version. I actually thought that source might be implemented but it didn't get any further than a few emails.
+
+
+"Lyrical Nanoha" was also involved but I believe the program came from Linards.
+
+BTW would you, Dave add me as a developer on the ADT project? I have registered as a developer on berlios with the handle knutrl. Do you intend to use the ADT project for more than to store finished versions? When will any source for your version be available?
+
+Knut
+
+From dave at dribin.org  Tue Jan  3 18:03:47 2006
+From: dave at dribin.org (Dave Dribin)
+Date: Tue, 3 Jan 2006 11:03:47 -0600
+Subject: [adt-dev] ADT13
+In-Reply-To: <22749224.1136284487255.JavaMail.adm-moff@moffice6.nsc.no>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no>  <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <22749224.1136284487255.JavaMail.adm-moff@moffice6.nsc.no>
+Message-ID: <EACF8B76-06EC-4489-9A8E-55737B1A2879@dribin.org>
+
+On Jan 3, 2006, at 4:34 AM, Knut Roll-lund wrote:
+> It is an ADT for DOS3.2 floppies (I believe, some games) that is  
+> formated with 13 sector tracks instead of the DOS3.3's 16 sectors  
+> per tracks. I believe it is a "hacked" software, so no source  
+> exists... and no windows version.
+
+Hmm...  I wonder how he changed the protocol.  The file doesn't seem  
+to be available on Asimov.  Too bad there is no source.
+
+> I observed this on c.s.a2 end of november 2005 and communicated a  
+> little with Linards because he was interested in the 115200 baud  
+> version. I actually thought that source might be implemented but it  
+> didn't get any further than a few emails.
+
+He seems to be active on c.s.a2.  Maybe I'll send him email.
+
+> BTW would you, Dave add me as a developer on the ADT project? I  
+> have registered as a developer on berlios with the handle knutrl.  
+> Do you intend to use the ADT project for more than to store  
+> finished versions? When will any source for your version be available?
+
+Yes, I plan to use the Subversion repository for all the source  
+code.  Currently, the website is in the repository:
+
+   http://svn.berlios.de/svnroot/repos/adt/website/trunk/
+
+Also, the bug and features lists could be handy.  I'll hopefully add  
+the source to Subversion tonight or tomorrow.  I'll definitely add  
+you as a developer, too.
+
+-Dave
+
+
+
+From eeastman at gmail.com  Tue Jan  3 20:55:37 2006
+From: eeastman at gmail.com (Ed Eastman)
+Date: Tue, 03 Jan 2006 13:55:37 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org>
+Message-ID: <43BAD6B9.6090309@gmail.com>
+
+Pardon mw while I catch up.  I've been busy...  Forgive any redundancies:
+
+
+Dave Dribin wrote:
+ > Ed and Knut, Thanks for joining the list!
+
+Thankx for putting up a discussion list for this project.  It seems abit 
+of a shame though that we arn't using the CSA2 Programmer sig.  The 
+disussion may draw more interest.  :)
+
+Dave Dribin wrote:
+ > I  think it would be better to have multiple zip files for download. 
+  > I  propose one for each Apple II program, and one for each PC side
+ > program.
+...
+ > They just need to download 2 files, instead of one.
+
+Knut Roll-Lund wrote:
+ > I think it is better for the user to get a functioning package.
+
+I would like to concur with Knut that one downlaod per platform 
+(PC/Mac/Linux/ whatever) would be more efficient and practical for those 
+who need it.  (That's right, the USERS.)
+
+Knut Roll-Lund
+ > the only point I'm really going to fight for is that we use version 
+numbers so that there will be no confusion about what is what.
+
+I think the naming convention and file type convention should match the 
+platform.  ATD(date).zip, ATD(date).SHK, and ADT(dat).rar or whatever 
+for Win/Dos, Mac, and Linux respectively.  This also would allow us 
+unlimited flexibility and making sure no one is confused about which 
+version they have.  Of coursethe version number coudl easily replace the 
+date code I noted above.  (I'm easy.)
+
+Dave Dribin wrote:
+ > Put All ADT Source Code Into Subversion
+
+This may be overkill after looking at the code involved, number of 
+people who are actively working on it and the likelyhood of others 
+wanting to expand the project.  But I LOVE that it will be online for 
+other to look at.
+
+Dave Dribin wrote:
+ > wxWidgets is a cross-platform, open source GUI library, available for
+ > Windows, Unix, and OS X.  Using wxWidgets for ADTWin would
+ > automatically give use GUIs for Linux and OS X.  I've used wxWidgets
+ > before, and the ADT GUI is a perfect use for it.
+
+Also at this point I'd like to point out that the OSX does not generally 
+have access to a serial port so it may be a mute thought.  (Unless it is 
+a really old G3.)
+
+Dave Dribin wrote:
+> This becomes confusing to the user, though.  Why should "Other" be  
+> separate?  And why must we force separate ADT and SST PC-side  
+> software?  They're 99% the same.  
+...
+> What I was trying to get  as was that the SSC assembly code could be put into a library and  
+> shared between ADT and SADT.
+
+Great, but don't forget the 'other' two serial cards for the Apple II, 
+the IIgs serial port and the original serial card.  They woudl also ned 
+theier own library.  None of the serial port types can use each other's 
+settings or control signals.  For Eg, the SSC is the only port to 
+support 115,200b for example.  While the IIgs serial hardware should 
+support 57,600 and maybe some others fine.
+
+Knut Roll-Lund wrote:
+ > I would think that if it <SST and ADT> can be combined seamlessly for 
+the user it can  be the same.
+
+I agree, so long as it works and is appropriately documented, the user 
+will not care if it is the same 'server' on the PC side with different 
+clients on the A2.
+
+Knut Roll-Lund wrote:
+ > BTW shouldn't we invite also Linards Ticmanis "ticmanis at gmx dot
+ > de" he has made the 13 sector ADT.
+Dave Dribin wrote:
+ > Sure, go ahead
+
+Good observation, Knut, let me know if this still needs to be done.
+
+Dave Dribin wrote:
+ > Hmm...  I wonder how he <Lenards> changed the protocol. <for ADT13> 
+  The file doesn't seem  to  be available on Asimov.  Too bad there is 
+no source.
+Knut Roll-lund wrote:
+ > I believe it is a "hacked" software, so no source exists
+...
+ > He seems to be active on c.s.a2.  Maybe I'll send him email.
+
+I know exactly how he most likely did this, it's an old trick with 
+demuffin.  You use the DOS 3.2 RWTS in a lower memory location.  Of 
+course I've not used ADT13 so I can't say for sure.  (Bload RWTS13, 
+Bload ADT, Patch ADT to call 3.2 RWTS. (Two bytes in IOB pointer and 
+change the sector counter code.)
+
+
+
+
+My 2cents and to catch up!
+Thankx,
+Ed
+
+
+From dave-ml at dribin.org  Thu Jan  5 06:06:54 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Wed, 4 Jan 2006 23:06:54 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <43BAD6B9.6090309@gmail.com>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org> <43BAD6B9.6090309@gmail.com>
+Message-ID: <EDFA5F8E-D37D-4452-BAFD-48E499ECEF8D@dribin.org>
+
+On Jan 3, 2006, at 1:55 PM, Ed Eastman wrote:
+> Thankx for putting up a discussion list for this project.  It seems  
+> abit of a shame though that we arn't using the CSA2 Programmer  
+> sig.  The disussion may draw more interest.  :)
+
+Given most of this discussion isn't related to general Apple II  
+programming, I think a separate mailing list is appropriate.  People  
+who just want to follow along with the discussion are definitely more  
+than welcome, though!
+
+> I would like to concur with Knut that one downlaod per platform (PC/ 
+> Mac/Linux/ whatever) would be more efficient and practical for  
+> those who need it.  (That's right, the USERS.)
+
+Well, I think we're just going to have to agree to disagree here.   
+But I think it's less confusing and practical for the end users if  
+the Apple II programs were split out from the PC/Mac/Linux program.   
+But I'm willing to concede on this point right now.
+
+> Dave Dribin wrote:
+> > Put All ADT Source Code Into Subversion
+>
+> This may be overkill after looking at the code involved, number of  
+> people who are actively working on it and the likelyhood of others  
+> wanting to expand the project.  But I LOVE that it will be online  
+> for other to look at.
+
+I find using source code control useful even when I'm the only  
+programmer.  Benefits include not having to worry about breaking  
+working code: I can always go back to a working version.  Easily  
+being able to code on multiple machines: I can check out the code and  
+development independently.  A simple backup solution: checked in code  
+is backed up to at least two machines.  And Subversion in particular  
+is implemented very well.
+
+> Also at this point I'd like to point out that the OSX does not  
+> generally have access to a serial port so it may be a mute  
+> thought.  (Unless it is a really old G3.)
+
+True, but you can add one really easily to an current day Mac:
+
+   http://www.keyspan.com/products/usb/USA19HS/
+
+I use a one (albeit a different brand) on my PowerBook and it works  
+awesome!  Not just for Apple II's, either.
+
+> Knut Roll-Lund wrote:
+> > BTW shouldn't we invite also Linards Ticmanis "ticmanis at gmx dot
+> > de" he has made the 13 sector ADT.
+
+Linards has joined the list, too.  Welcome!  I'll start a separate  
+thread for our ADT13 questions.
+
+-Dave
+
+
+
+From dave-ml at dribin.org  Thu Jan  5 06:12:18 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Wed, 4 Jan 2006 23:12:18 -0600
+Subject: [adt-dev] ADT13 questions
+Message-ID: <6A3F26CE-6AE2-4307-A4B6-A18E3DACA039@dribin.org>
+
+Welcome Linards!
+
+First off, now that we are on BerliOS, we can use their servers for  
+hosting files.  I don't think Asimov has made your ADT13 available,  
+yet, so if you could post the file somewhere temporarily, I could  
+grab it and then upload it to the BerliOS file server.
+
+I know we've got a couple of questions about ADT13.  How did you go  
+about implementing it?  Do you have the source code (both Apple II  
+and PC) available?  And how did you change the ADT protocol to handle  
+the new disk format?  Any information you could give would be  
+helpful!  There seems to be some active development going on in the  
+ADT world, and it would be nice if all the variations worked  
+together, or at the very least, not step on each other's toes.
+
+-Dave
+
+
+
+From kr-lund at online.no  Thu Jan  5 11:26:51 2006
+From: kr-lund at online.no (Knut Roll-lund)
+Date: Thu, 5 Jan 2006 11:26:51 +0100 (CET)
+Subject: SV: [adt-dev] ADT Ideas
+In-Reply-To: <EDFA5F8E-D37D-4452-BAFD-48E499ECEF8D@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org> <43BAD6B9.6090309@gmail.com> 
+ <EDFA5F8E-D37D-4452-BAFD-48E499ECEF8D@dribin.org>
+Message-ID: <30901317.1136456811121.JavaMail.adm-moff@moffice9.nsc.no>
+
+Hi
+
+...
+> > Dave Dribin wrote:
+> > > Put All ADT Source Code Into Subversion
+> >
+> > This may be overkill after looking at the code involved, number of  
+> > people who are actively working on it and the likelyhood of others  
+> > wanting to expand the project.  But I LOVE that it will be online  
+> > for other to look at.
+> 
+> I find using source code control useful even when I'm the only  
+> programmer.  Benefits include not having to worry about breaking  
+> working code: I can always go back to a working version.  Easily  
+> being able to code on multiple machines: I can check out the code and  
+> development independently.  A simple backup solution: checked in code  
+> is backed up to at least two machines.  And Subversion in particular  
+> is implemented very well.
+...
+
+I couldn't get subversion to work, it didn't compile. It is normal to distribute executables for PC/windows, because there is a wide range of compilers and libraries. It seemed that I had the right compiler for windows but it failed with syntax error. This is probably exactly my point about cross-platform development.
+
+The web interface for looking at the files is very limited. It seems, I can't download the files, only look at them. Note, this is probably different if you are registered as a developer in the project. I had hoped that using subversion I was able to get a local copy. I would like to browse the files in visual studio 2005, which gives me a lot of functinality with C++.
+
+Knut
+
+From ticmanis at gmx.de  Thu Jan  5 13:43:19 2006
+From: ticmanis at gmx.de (Linards Ticmanis)
+Date: Thu, 05 Jan 2006 13:43:19 +0100
+Subject: [adt-dev] ADT13 questions
+In-Reply-To: <6A3F26CE-6AE2-4307-A4B6-A18E3DACA039@dribin.org>
+References: <6A3F26CE-6AE2-4307-A4B6-A18E3DACA039@dribin.org>
+Message-ID: <43BD1467.5050102@gmx.de>
+
+Hello Dave,
+
+Dave Dribin wrote:
+
+> First off, now that we are on BerliOS, we can use their servers for  
+> hosting files.  I don't think Asimov has made your ADT13 available,  
+> yet, so if you could post the file somewhere temporarily, I could  grab 
+> it and then upload it to the BerliOS file server.
+
+I'd like to include the BASICS.DSK file, update the distribution disk 
+from DOS 3.2 to DOS 3.2.1 and update the README a bit. Probably I'll do 
+it tonight or tomorrow night, but no promises. What do you mean by "post 
+it"? I don't have a website at this time. I can mail it or ftp-upload it 
+to somebody of course.
+
+> I know we've got a couple of questions about ADT13.  How did you go  
+> about implementing it?
+
+The main rule was "minimal changes". And the changes required were 
+indeed very small. Just read and write only 13 sectors per track instead 
+of 16. Transfer 7*13*256 bytes instead of 7*16*256 bytes in one go. And 
+modify the displays on both sides to show only 13 sectors per track. 
+Plus a few cosmetic changes to the text messages. That's it. The main 
+change is really the use of DOS 3.2 instead of DOS 3.3, ADT itself was 
+changed very little.
+
+> Do you have the source code (both Apple II  and 
+> PC) available?
+
+Yes, though I used mainly the Unix version on the PC side. I didn't 
+reassemble the Apple II side executable, I just went through the hex 
+machine code with the help of the assembly source and patched it with a 
+hex editor. Nothing was relocated or moved around, so you can just 
+compare the two directly with a binary-compare program to find the 
+changes. Of course on the PC side I edited the source, fixing a couple 
+of warnings while I was at it, and recompiled.
+
+I should add that I worked off the old ADT version, as the 115200 bps 
+version wasn't available yet when I started this.
+
+ > And how did you change the ADT protocol to handle  the
+> new disk format?
+
+Hardly at all. Just send fewer bytes. All the handshaking remained 
+unchanged.
+
+> Any information you could give would be  helpful!  
+> There seems to be some active development going on in the  ADT world, 
+> and it would be nice if all the variations worked  together, or at the 
+> very least, not step on each other's toes.
+
+Well, running 16-sector ADT on on side and ADT13 on the other is 
+definitely not going to work. Probably it will just lock up because one 
+side is waiting for more bytes and the other thinks it's done. Pressing 
+ESC should get you out of this, though.
+
+It might be worthwhile to change the ADT13 handshaking so that there 
+needs to be only one executable on the PC side which can determine which 
+one is running on the apple, and which "speaks" both languages.
+
+On the other hand, if the nibble-based ADT becomes a reality in the near 
+future, all the differences between .dsk and .d13 can be handled on the 
+PC side anyway, and there'll be no longer a need to run DOS 3.2 to 
+transfer 13-sector disks.
+
+Let me make a suggestion for a future nibble ADT: I suggest handling all 
+sync-byte issues entirely on the PC side. Let the Apple side just write 
+bytes, one per 32 cycles no matter what. The Disk II controller can only 
+read bytes starting with a 1, but it can write all bytes; so instead of 
+telling it to write FF FF FF FF FF at 40-cycle steps, one can just tell 
+it to write FF 3F CF F3 FC FF as standard 32-cycle bytes and the result 
+will be the same. This way all that bit-banging can happen on the PC, 
+where it's probably easier to program anyway. And this way it's also 
+easy to implement the ability to handle both 36-cycle and 40-cycle syncs.
+
+Greetz,
+-- 
+Linards Ticmanis
+
+
+From dave-ml at dribin.org  Thu Jan  5 17:37:16 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Thu, 5 Jan 2006 10:37:16 -0600
+Subject: SV: [adt-dev] ADT Ideas
+In-Reply-To: <30901317.1136456811121.JavaMail.adm-moff@moffice9.nsc.no>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org> <43BAD6B9.6090309@gmail.com>  <EDFA5F8E-D37D-4452-BAFD-48E499ECEF8D@dribin.org> <30901317.1136456811121.JavaMail.adm-moff@moffice9.nsc.no>
+Message-ID: <F4D51139-3603-4BC7-BCF6-C76C0F625B0E@dribin.org>
+
+On Jan 5, 2006, at 4:26 AM, Knut Roll-lund wrote:
+> I couldn't get subversion to work, it didn't compile. It is normal  
+> to distribute executables for PC/windows, because there is a wide  
+> range of compilers and libraries.
+
+They do offer executables for Windows.  There's even an installer:
+
+   http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91
+
+That said, I would highly recommend TortoiseSVN instead:
+
+   http://tortoisesvn.tigris.org/
+
+It does require Win2k or XP, but it integrates very nicely into the  
+Windows shell (Explorer).  There is a binary download for this, too.
+
+> It seemed that I had the right compiler for windows but it failed  
+> with syntax error. This is probably exactly my point about cross- 
+> platform development.
+
+I wouldn't extrapolate so far from just this one data point. :)  I  
+think Subversion is a good example of cross platform code, actually.   
+Most of the source is shared between platforms and (should) compile  
+on just about every flavor of Unix (including Linux and OS X) as well  
+as Windows.
+
+Developing on Windows when a project depends on many 3rd party  
+libraries is always tricky in my experience, which Subversion does.   
+It's hard to make sure everyone is in sync with the same versions and  
+the paths are setup appropriately.  ADT will be far simpler, since it  
+will have few other dependencies (wxWidgets, being the only one I am  
+planning on using).  Subversion can actually help with this, too, by  
+checking in the binaries for dependent libraries.
+
+If you really want to realize the full benefit of Subversion, I'd  
+recommend Pragmatic Version Control Using Subversion:
+
+   http://www.pragmaticprogrammer.com/titles/svn/index.html
+
+But I'll be handling all Subversion administration, since I'm quite  
+familiar with it.  That book is just recommended if you want to learn  
+more.
+
+-Dave
+
+
+
+From dave-ml at dribin.org  Thu Jan  5 18:00:45 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Thu, 5 Jan 2006 11:00:45 -0600
+Subject: [adt-dev] ADT13 questions
+In-Reply-To: <43BD1467.5050102@gmx.de>
+References: <6A3F26CE-6AE2-4307-A4B6-A18E3DACA039@dribin.org> <43BD1467.5050102@gmx.de>
+Message-ID: <2AC207A6-EAEB-485B-B010-624B926F8A90@dribin.org>
+
+On Jan 5, 2006, at 6:43 AM, Linards Ticmanis wrote:
+> I'd like to include the BASICS.DSK file, update the distribution  
+> disk from DOS 3.2 to DOS 3.2.1 and update the README a bit.  
+> Probably I'll do it tonight or tomorrow night, but no promises.  
+> What do you mean by "post it"? I don't have a website at this time.  
+> I can mail it or ftp-upload it to somebody of course.
+
+No rush... Just send me the file in an email (offlist) when you get  
+around to it, since you don't have any web space available.  I'll  
+then upload it to BerliOS.
+
+> The main rule was "minimal changes". And the changes required were  
+> indeed very small. Just read and write only 13 sectors per track  
+> instead of 16. Transfer 7*13*256 bytes instead of 7*16*256 bytes in  
+> one go. And modify the displays on both sides to show only 13  
+> sectors per track. Plus a few cosmetic changes to the text  
+> messages. That's it. The main change is really the use of DOS 3.2  
+> instead of DOS 3.3, ADT itself was changed very little.
+
+Ahh... so it requires a DOS 3.2 floppy on the Apple II side?  Or does  
+it install DOS 3.2 RWTS at a lower address concurrently with DOS 3.3?
+
+>> Do you have the source code (both Apple II  and PC) available?
+>
+> Yes, though I used mainly the Unix version on the PC side. I didn't  
+> reassemble the Apple II side executable, I just went through the  
+> hex machine code with the help of the assembly source and patched  
+> it with a hex editor. Nothing was relocated or moved around, so you  
+> can just compare the two directly with a binary-compare program to  
+> find the changes. Of course on the PC side I edited the source,  
+> fixing a couple of warnings while I was at it, and recompiled.
+
+Okay, cool.  Hopefully we can integrate this into the source code in  
+the future.  That will make sure updates, like 115K, get included.
+
+> > And how did you change the ADT protocol to handle  the
+>> new disk format?
+>
+> Hardly at all. Just send fewer bytes. All the handshaking remained  
+> unchanged.
+
+Okay.
+
+> It might be worthwhile to change the ADT13 handshaking so that  
+> there needs to be only one executable on the PC side which can  
+> determine which one is running on the apple, and which "speaks"  
+> both languages.
+
+Yeah, I'm thinking that maybe adding two new commands would be  
+worthwhile, to maintain backwards compatibility with 16 sector  
+transfers.  ADT currently sends 0xD2 ('R') or 0xD3 ('S') to initiate  
+a receive or send, respectively.  I was going to use 0xD4 for  
+sending .NIB disks, and maybe reserve 0xD5 for receiving .NIB disks  
+(I don't plan on supporting that right now, though).  So maybe ADT13  
+should use 0xD6 and 0xD7 for 13 sector disks?
+
+> On the other hand, if the nibble-based ADT becomes a reality in the  
+> near future, all the differences between .dsk and .d13 can be  
+> handled on the PC side anyway, and there'll be no longer a need to  
+> run DOS 3.2 to transfer 13-sector disks.
+
+The way nibble transfer will work, I think it'll still be worthwhile  
+to have ADT13.  First off, nibble transfers are much slower, since it  
+transfers one track at a time, where ADT13 will do 7.  Plus, nibble  
+transfers don't do any error checking/correction on the data.  Using  
+RWTS results in more robust disk transfers, since it uses checksums  
+and retries on each sector prolog, data, and epilog.
+
+> Let me make a suggestion for a future nibble ADT: I suggest  
+> handling all sync-byte issues entirely on the PC side. Let the  
+> Apple side just write bytes, one per 32 cycles no matter what. The  
+> Disk II controller can only read bytes starting with a 1, but it  
+> can write all bytes; so instead of telling it to write FF FF FF FF  
+> FF at 40-cycle steps, one can just tell it to write FF 3F CF F3 FC  
+> FF as standard 32-cycle bytes and the result will be the same. This  
+> way all that bit-banging can happen on the PC, where it's probably  
+> easier to program anyway. And this way it's also easy to implement  
+> the ability to handle both 36-cycle and 40-cycle syncs.
+
+That's a possibility.  I was planning on supporting the convention of  
+high bit clear means a 10-bit sync, and both high bit and low bit  
+clear means a 9-bit sync.  This would require some extra logic on the  
+Apple II side, but the PC side would not need to convert a byte  
+stream into a bit stream.  But this point is moot right now, since I  
+was not planning on being able to receive nibble images, only send.   
+This is mainly because the .NIB format does not keep track of sync  
+bytes, which would be needed to write the disk correctly.
+
+-Dave
+
+
+
+From dave-ml at dribin.org  Thu Jan  5 18:17:49 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Thu, 5 Jan 2006 11:17:49 -0600
+Subject: [adt-dev] Files from ADT_2005_2.zip imported into Subversion
+Message-ID: <D9EBE467-CBCE-4270-9247-573D176AB109@dribin.org>
+
+I've imported all the files (excluding adt.exe and adtdos.exe, which  
+can be rebuilt) into Subversion.  If you want to check out the code  
+anonymously (read-only), I'd recommend using HTTP, using the URL:
+
+   http://svn.berlios.de/svnroot/repos/adt/adt/trunk
+
+If you're using the command line tools, use this command:
+
+   % svn checkout http://svn.berlios.de/svnroot/repos/adt/adt/trunk adt
+
+Knut, I added you as a developer, so you can check out code and check  
+stuff in.  Use the svn over ssh URL:
+
+   svn+ssh://knutrl at svn.berlios.de/svnroot/repos/adt/adt/trunk
+
+Again, from the command line:
+
+   % svn checkout svn+ssh://knutrl at svn.berlios.de/svnroot/repos/adt/ 
+adt/trunk adt
+
+I would use TortoiseSVN on Windows instead of the command line,  
+though.  You can do checkout using right click from Windows  
+Explorer.  Try to remember to check out into a directory named "adt"  
+instead of "trunk".
+
+For the curious, I also created a release tag named 2005_2, to  
+indicate this came from ADT_2005_2.zip:
+
+   http://svn.berlios.de/svnroot/repos/adt/adt/tags/rel-2005_2/
+
+-Dave
+
+
+
+From ticmanis at gmx.de  Thu Jan  5 18:42:04 2006
+From: ticmanis at gmx.de (Linards Ticmanis)
+Date: Thu, 05 Jan 2006 18:42:04 +0100
+Subject: [adt-dev] ADT13 questions
+In-Reply-To: <2AC207A6-EAEB-485B-B010-624B926F8A90@dribin.org>
+References: <6A3F26CE-6AE2-4307-A4B6-A18E3DACA039@dribin.org> <43BD1467.5050102@gmx.de> <2AC207A6-EAEB-485B-B010-624B926F8A90@dribin.org>
+Message-ID: <43BD5A6C.1060106@gmx.de>
+
+Dave Dribin wrote:
+
+> Ahh... so it requires a DOS 3.2 floppy on the Apple II side?  Or does  
+> it install DOS 3.2 RWTS at a lower address concurrently with DOS 3.3?
+
+Instead of a long explanation, you might want to check out the version 
+as it currently stands (my work plus an improvement by "Lyrical Nanoha"):
+
+> http://www.dosius.net:8080/adt13-altstrap.zip
+
+Just read the included "README.TXT", it will make the process clear. And 
+no, you don't need to have a 13-sector disk already available at the 
+beginning.
+
+> Okay, cool.  Hopefully we can integrate this into the source code in  
+> the future.  That will make sure updates, like 115K, get included.
+
+I'll have to look through the binary again myself I fear and produce an 
+updated version of the assembly source.
+
+> Yeah, I'm thinking that maybe adding two new commands would be  
+> worthwhile, to maintain backwards compatibility with 16 sector  
+> transfers.  ADT currently sends 0xD2 ('R') or 0xD3 ('S') to initiate  a 
+> receive or send, respectively.  I was going to use 0xD4 for  sending 
+> .NIB disks, and maybe reserve 0xD5 for receiving .NIB disks  (I don't 
+> plan on supporting that right now, though).
+
+I'd be interested in tackling this at some point. I have very few 
+original disks so the NIB-to-PC transfer is of little interest to me. On 
+the other hand I like to run stuff on the real hardware; for this NIB is 
+a real show-stopper until now.
+
+>  So maybe ADT13  should use 
+> 0xD6 and 0xD7 for 13 sector disks?
+
+Should be a small change and easily possible. On the Apple side a 
+unified executable doesn't make that much sense, since it relies on the 
+underlying DOS anyway; ADT13 must reside on a 13-sector disk and 
+16-sector ADT must reside on a 16-sector disk as things stand. But on 
+the PC side this change would allow a unified executable.
+
+> The way nibble transfer will work, I think it'll still be worthwhile  to 
+> have ADT13.  First off, nibble transfers are much slower, since it  
+> transfers one track at a time, where ADT13 will do 7.
+
+Why? A nibble ADT could overwrite DOS, and thus have all the memory from 
+$0800 to $BFFF at its disposal. At $1A00 bytes per track this is still 
+enough for 7 tracks. Subtract the space used by the code itself, and 6 
+tracks should fit into memory.
+
+> Plus, nibble  
+> transfers don't do any error checking/correction on the data.
+
+Well... they don't do it unless you code it in. ;-)
+
+> Using  
+> RWTS results in more robust disk transfers, since it uses checksums  and 
+> retries on each sector prolog, data, and epilog.
+
+But of course checksuming and retrying can be hand-coded into a nibble 
+transfer. It's more work though, I'll concur with that.
+
+> That's a possibility.  I was planning on supporting the convention of  
+> high bit clear means a 10-bit sync, and both high bit and low bit  clear 
+> means a 9-bit sync.
+
+That has the problem that there might exist 10-bit syncs with the low 
+bit clear as well as set; and also 9-bit syncs with both kinds of low bits.
+
+I believe if one really wants to transfer a reliable, complete 
+bit-stream off the disk, one must read the track several times anyway, 
+since variations in disk speed can get sync bytes to seemingly appear or 
+disappear at random during a read. Only way to be sure is to read 
+several times and compare.
+
+>  But this point is moot right now, since I  was not planning 
+> on being able to receive nibble images, only send. This is mainly 
+> because the .NIB format does not keep track of sync  bytes, which would 
+> be needed to write the disk correctly.
+
+Yes, .NIB is a stinker. Isn't there a better, newer nibble-based format 
+already out there that preserves sync bytes and track lenghts? The most 
+versatile way to me seems to be: treating the track simply as a sequence 
+of bits of a certain lenght, and sorting out syncs by simulating the way 
+the woz machine itself works. You can always convert the stuff to .NIB 
+after-the-fact if you absolutely need this format.
+
+In the PC-to-Apple direction, the only way to deal with .NIB is to use a 
+couple of heuristics to guess which bytes are sync bytes.
+
+-- 
+Linards Ticmanis
+
+
+
+From kr-lund at online.no  Thu Jan  5 19:04:12 2006
+From: kr-lund at online.no (Knut Roll-Lund)
+Date: Thu, 05 Jan 2006 19:04:12 +0100
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <F4D51139-3603-4BC7-BCF6-C76C0F625B0E@dribin.org>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org> <43BAD6B9.6090309@gmail.com>  <EDFA5F8E-D37D-4452-BAFD-48E499ECEF8D@dribin.org> <30901317.1136456811121.JavaMail.adm-moff@moffice9.nsc.no> <F4D51139-3603-4BC7-BCF6-C76C0F625B0E@dribin.org>
+Message-ID: <43BD5F9C.4050303@online.no>
+
+Dave Dribin wrote:
+
+> On Jan 5, 2006, at 4:26 AM, Knut Roll-lund wrote:
+>
+>> I couldn't get subversion to work, it didn't compile. It is normal  
+>> to distribute executables for PC/windows, because there is a wide  
+>> range of compilers and libraries.
+>
+>
+> They do offer executables for Windows.  There's even an installer:
+>
+>   http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91
+>
+> That said, I would highly recommend TortoiseSVN instead:
+>
+>   http://tortoisesvn.tigris.org/
+>
+> It does require Win2k or XP, but it integrates very nicely into the  
+> Windows shell (Explorer).  There is a binary download for this, too.
+
+
+I wonder why I failed to see those yesterday... sorry. Anyway I took 
+your advice and got tortoisesvn instead, thanks. Actually I use command 
+line quite a lot with windows since I use TotalCommander (previously 
+wincmd). It is very convenient instead of using the start-menu (several 
+levels in to it). And many programs accept commandline arguments, 
+winmerge is a good example.
+
+>> It seemed that I had the right compiler for windows but it failed  
+>> with syntax error. This is probably exactly my point about cross- 
+>> platform development.
+>
+>
+> I wouldn't extrapolate so far from just this one data point. :)  I  
+> think Subversion is a good example of cross platform code, actually.   
+> Most of the source is shared between platforms and (should) compile  
+> on just about every flavor of Unix (including Linux and OS X) as well  
+> as Windows.
+>
+> Developing on Windows when a project depends on many 3rd party  
+> libraries is always tricky in my experience, which Subversion does.   
+> It's hard to make sure everyone is in sync with the same versions and  
+> the paths are setup appropriately.  ADT will be far simpler, since it  
+> will have few other dependencies (wxWidgets, being the only one I am  
+> planning on using).  Subversion can actually help with this, too, by  
+> checking in the binaries for dependent libraries.
+>
+> If you really want to realize the full benefit of Subversion, I'd  
+> recommend Pragmatic Version Control Using Subversion:
+>
+>   http://www.pragmaticprogrammer.com/titles/svn/index.html
+>
+> But I'll be handling all Subversion administration, since I'm quite  
+> familiar with it.  That book is just recommended if you want to learn  
+> more.
+
+
+We use Visual Source Safe at work. I like winzip combined with winmerge, 
+zipping up a backup of the project once in a while, and later if I want 
+to go back I use winmerge to find differences. But then again I'm pretty 
+tidy. I work with programming too and it is important to me that my 
+hobby programming doesn't "taste" like work. :-)
+
+Knut
+
+
+From dave-ml at dribin.org  Thu Jan  5 19:18:59 2006
+From: dave-ml at dribin.org (Dave Dribin)
+Date: Thu, 5 Jan 2006 12:18:59 -0600
+Subject: [adt-dev] ADT Ideas
+In-Reply-To: <43BD5F9C.4050303@online.no>
+References: <BD7F2CF5-4555-49CF-AB69-F9BF1063FE28@dribin.org> <43B986D0.3020100@gmail.com> <9349D9B1-558A-4136-B1CE-7BCC0F9A3E37@dribin.org> <43B9C70B.2090509@online.no> <C8A1C3C4-F13B-48BC-94CE-C98C2AFC2342@dribin.org> <3B6642FC-4FC9-4C8F-9410-875B35F18026@dribin.org> <43BAD6B9.6090309@gmail.com>  <EDFA5F8E-D37D-4452-BAFD-48E499ECEF8D@dribin.org> <30901317.1136456811121.JavaMail.adm-moff@moffice9.nsc.no> <F4D51139-3603-4BC7-BCF6-C76C0F625B0E@dribin.org> <43BD5F9C.4050303@online.no>
+Message-ID: <D10EC85A-9E67-4CA3-B297-C58B2074E76D@dribin.org>
+
+On Jan 5, 2006, at 12:04 PM, Knut Roll-Lund wrote:
+> Actually I use command line quite a lot with windows since I use  
+> TotalCommander (previously wincmd). It is very convenient instead  
+> of using the start-menu (several levels in to it). And many  
+> programs accept commandline arguments, winmerge is a good example.
+
+Cool, I'll have to remember TotalCommander in case I'm stuck doing  
+lots of Windows development some day.  Usually, I install Cygwin when  
+I'm on Windows, since I feel at home in a Unix-type environment.
+
+> I work with programming too and it is important to me that my hobby  
+> programming doesn't "taste" like work. :-)
+
+Hopefully we can keep ADT coding fun!  Once this initial admin stuff  
+is complete, we can get on to the fun stuff.  Maybe I'm weird,  
+though, since I actually find it sorta fun to use and learn things  
+like Subversion and wxWidgets outside of work. :)
+
+-Dave
+
+
+
+

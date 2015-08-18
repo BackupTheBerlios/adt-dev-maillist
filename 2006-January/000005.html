@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C43B9C70B.2090509%40online.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000004.html">
+   <LINK REL="Next"  HREF="000006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT Ideas</H1>
+    <B>Knut Roll-Lund</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C43B9C70B.2090509%40online.no%3E"
+       TITLE="[adt-dev] ADT Ideas">kr-lund at online.no
+       </A><BR>
+    <I>Tue Jan  3 01:36:27 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000004.html">[adt-dev] ADT Ideas
+</A></li>
+        <LI>Next message: <A HREF="000006.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5">[ date ]</a>
+              <a href="thread.html#5">[ thread ]</a>
+              <a href="subject.html#5">[ subject ]</a>
+              <a href="author.html#5">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dave Dribin wrote:
+
+&gt;<i> On Jan 2, 2006, at 2:02 PM, Ed Eastman wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> It should also be noted that the windows and Apple versions of the  
+</I>&gt;&gt;<i> software have remained backwards compatible with other version  since 
+</I>&gt;&gt;<i> 1.21? where a major compression algorithm was added.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Yeah, the fact that newer PC-side versions are backwards compatible  
+</I>&gt;<i> with older Apple II side was my main motivation for splitting the zip  
+</I>&gt;<i> file up.
+</I>
+I think it is better for the user to get a functioning package. I would 
+rather give the package a proper version number (I broke the old year 
+based one by releasing another 2005... didn't want to postpone the 
+problem to 2006)
+
+&gt;&gt;<i> That being said, I think it is a great idea to make distribution  
+</I>&gt;&gt;<i> modules for each platform that include the latest AppleII version  
+</I>&gt;&gt;<i> for each.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [ .. snip .. ]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The distribution will make sure they are compatible or else they  
+</I>&gt;&gt;<i> should not be included for that platform.  (It seems a bit verbose  
+</I>&gt;&gt;<i> but does it make sense?)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> No other modules including a a pure A2 version should be  necessary.  
+</I>&gt;&gt;<i> But each distribution module should contain whatever is  supported, 
+</I>&gt;&gt;<i> including all the A2 versions.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I can see that perspective.  I think the naming convention of  
+</I>&gt;<i> ADT_XXXX.zip where XXXX is the year very poor, though.  Maybe this  
+</I>&gt;<i> becomes the version number, and then the version number of the A2  
+</I>&gt;<i> client gets bumped, even if there is no change.  Compatibility is  
+</I>&gt;<i> determined by version.  Thus, ADT_1.23.zip contains ADTWin v1.23,  
+</I>&gt;<i> ADTss v1.23, and ADTcc v1.23.   This results in possibility of ADTcc  
+</I>&gt;<i> v1.22 being exactly the same as ADTcc v1.23, but at least everything  
+</I>&gt;<i> in the zip file is named in a consistent way.  I still think this is  
+</I>&gt;<i> less flexible than the separation I was proposing, but at least it's  
+</I>&gt;<i> not quite as confusing.
+</I>
+
+I mean that if the protocol changes we &quot;up&quot; a major version, go to 2.00 
+actually we might want to use 3 numbers, the first for protocol, the 
+second for functionality and the third for bugfixes (like my last release).
+
+&gt;&gt;<i> I think that if the ADT and SST can not be 'easily' combined into  
+</I>&gt;&gt;<i> one A2 client, then they should remain separate and so should the  
+</I>&gt;&gt;<i> Other platform.  So you'd have ADTWin with ADTApple2(s) and SSTWin  
+</I>&gt;&gt;<i> with SSTApple2 in one distribution, for example.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This becomes confusing to the user, though.  Why should &quot;Other&quot; be  
+</I>&gt;<i> separate?  And why must we force separate ADT and SST PC-side  
+</I>&gt;<i> software?  They're 99% the same.  I was    planning for ADTWin and  
+</I>&gt;<i> SSTWin to be the same program, for example.
+</I>&gt;<i>
+</I>&gt;<i> The way I keep thinking about this is in terms of a protocol with  
+</I>&gt;<i> clients and servers.   Clients and servers interact, so long as they  
+</I>&gt;<i> speak the same protocol.  Clients and servers are developed and  
+</I>&gt;<i> released independently, as improvements related to each occur.  The  
+</I>&gt;<i> protocol stays constant.  As such, ADT is a protocol.  There may be  
+</I>&gt;<i> more than one version of the protocol (pre-1.21 and post 1.22, for  
+</I>&gt;<i> example), and future changes in protocol could be handled in a better  
+</I>&gt;<i> way to ensure compatibility.  But this perspective does allow more  
+</I>&gt;<i> flexibility.  And I don't think it's that much more confusing to the  
+</I>&gt;<i> end user.  They just need to download 2 files, instead of one.
+</I>&gt;<i>
+</I>&gt;<i> Just my $.02... :)  Once I get ADT/SST far enough, maybe I'll try to  
+</I>&gt;<i> implement this,  and see if it confuses people.
+</I>
+
+I would think that if it can be combined seamlessly for the user it can 
+be the same.
+
+Actually I don't yet have much information about this ADT-SST is going 
+to work... Is it going to deal with nib files or with dual dsk files 
+like SST or a new format, an SST dual disk image? Is there a 
+relationship between nib and SST? I was told that the nib format came 
+from a copyprogram but when it doesn't have the sync information is this 
+something that was dropped/lost when the nib format was created? Please 
+tell me more.
+
+from the first message by Dave:
+
+&gt;<i> For my ADT/SST merger, I've already done a fair amount of this  
+</I>&gt;<i> restructuring.  One major change I did was to use C++ instead of C.   
+</I>&gt;<i> All platforms we're targeting, including DOS, have good C++ compilers  
+</I>&gt;<i> available.  C++ provides a lot more flexibility on code structure in  
+</I>&gt;<i> my opinion, so I sort of made an executive decision to use it over  
+</I>&gt;<i> C.  Also, using C++ will help us implement my next idea:  I'd also  
+</I>&gt;<i> like ADTWin to use wxWidgets for it's GUI:
+</I>&gt;<i>
+</I>&gt;<i>   <A HREF="http://www.wxwidgets.org/">http://www.wxwidgets.org/</A>
+</I>&gt;<i>
+</I>&gt;<i> wxWidgets is a cross-platform, open source GUI library, available for  
+</I>&gt;<i> Windows, Unix, and OS X.  Using wxWidgets for ADTWin would  
+</I>&gt;<i> automatically give use GUIs for Linux and OS X.  I've used wxWidgets  
+</I>&gt;<i> before, and the ADT GUI is a perfect use for it.
+</I>
+I think making it cross-platform will create endless problems and is 
+thus a waste of time. If I make a change and test this for windows and 
+dos how can I check that my change is valid for linux and mac? Did you 
+notice how much interest there was when it was requested a baudrate 
+upping also for the mac version? or the gs version? I think the 
+platforms must live their own lives.
+
+It seems that it was the intention of the creator of ADTwin that he 
+would also create the dos version by applying a define. I don't know if 
+this works or why it is not used. Maybe it is much larger than the 
+original dos code... ADTwin is C++ but maybe not taken to its full 
+potential... I must admit I don't like C++. This is because it typically 
+makes the code less readable by obscuring how things connect 
+(abstracting). I realize that there are many tools that might help 
+figuring such out (the later visual studio's are pretty intelligent). 
+People always make &quot;spaghetti&quot; code and C++ makes it worse.
+
+I don't like heavily IFDEF'ed code. I deal with cross-platform 
+development at work and it is a pain. We generate unreadable code 
+because of macros. Sometimes we make changes that break another platform 
+without realizing and end up wasting time on debugging. It is better 
+that the only common thing is the protocol...
+
+About ca65 conversion, I find it is pretty convenient to develop using 
+merlin too, I edit in my favorite editor on the pc, transfers to a disk 
+image and compiles in an emulator, not a slow process at all. The 
+slowest part is to ADT the disk over to test the result on the real 
+machine. With 155200 baud that isn't horribly slow either. Dos ca65 work 
+flawlessly (my experience is with sdcc for Z80; bad such)? Just 
+wondering; has anyone made an ansi c function library for Apple2 DOS3.3 
+and/or ProDOS on cc65? Did download it a while ago but haven't had time 
+to look at it yet.
+
+BTW shouldn't we invite also Linards Ticmanis &quot;ticmanis at gmx dot de&quot; 
+he has made the 13 sector ADT.
+
+Well, there were some opinions, the only point I'm really going to fight 
+for is that we use version numbers so that there will be no confusion 
+about what is what.
+
+Knut
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000004.html">[adt-dev] ADT Ideas
+</A></li>
+	<LI>Next message: <A HREF="000006.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5">[ date ]</a>
+              <a href="thread.html#5">[ thread ]</a>
+              <a href="subject.html#5">[ subject ]</a>
+              <a href="author.html#5">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT13 questions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT13%20questions&In-Reply-To=%3C2AC207A6-EAEB-485B-B010-624B926F8A90%40dribin.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000014.html">
+   <LINK REL="Next"  HREF="000018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT13 questions</H1>
+    <B>Dave Dribin</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT13%20questions&In-Reply-To=%3C2AC207A6-EAEB-485B-B010-624B926F8A90%40dribin.org%3E"
+       TITLE="[adt-dev] ADT13 questions">dave-ml at dribin.org
+       </A><BR>
+    <I>Thu Jan  5 18:00:45 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000014.html">[adt-dev] ADT13 questions
+</A></li>
+        <LI>Next message: <A HREF="000018.html">[adt-dev] ADT13 questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 5, 2006, at 6:43 AM, Linards Ticmanis wrote:
+&gt;<i> I'd like to include the BASICS.DSK file, update the distribution  
+</I>&gt;<i> disk from DOS 3.2 to DOS 3.2.1 and update the README a bit.  
+</I>&gt;<i> Probably I'll do it tonight or tomorrow night, but no promises.  
+</I>&gt;<i> What do you mean by &quot;post it&quot;? I don't have a website at this time.  
+</I>&gt;<i> I can mail it or ftp-upload it to somebody of course.
+</I>
+No rush... Just send me the file in an email (offlist) when you get  
+around to it, since you don't have any web space available.  I'll  
+then upload it to BerliOS.
+
+&gt;<i> The main rule was &quot;minimal changes&quot;. And the changes required were  
+</I>&gt;<i> indeed very small. Just read and write only 13 sectors per track  
+</I>&gt;<i> instead of 16. Transfer 7*13*256 bytes instead of 7*16*256 bytes in  
+</I>&gt;<i> one go. And modify the displays on both sides to show only 13  
+</I>&gt;<i> sectors per track. Plus a few cosmetic changes to the text  
+</I>&gt;<i> messages. That's it. The main change is really the use of DOS 3.2  
+</I>&gt;<i> instead of DOS 3.3, ADT itself was changed very little.
+</I>
+Ahh... so it requires a DOS 3.2 floppy on the Apple II side?  Or does  
+it install DOS 3.2 RWTS at a lower address concurrently with DOS 3.3?
+
+&gt;&gt;<i> Do you have the source code (both Apple II  and PC) available?
+</I>&gt;<i>
+</I>&gt;<i> Yes, though I used mainly the Unix version on the PC side. I didn't  
+</I>&gt;<i> reassemble the Apple II side executable, I just went through the  
+</I>&gt;<i> hex machine code with the help of the assembly source and patched  
+</I>&gt;<i> it with a hex editor. Nothing was relocated or moved around, so you  
+</I>&gt;<i> can just compare the two directly with a binary-compare program to  
+</I>&gt;<i> find the changes. Of course on the PC side I edited the source,  
+</I>&gt;<i> fixing a couple of warnings while I was at it, and recompiled.
+</I>
+Okay, cool.  Hopefully we can integrate this into the source code in  
+the future.  That will make sure updates, like 115K, get included.
+
+&gt;<i> &gt; And how did you change the ADT protocol to handle  the
+</I>&gt;&gt;<i> new disk format?
+</I>&gt;<i>
+</I>&gt;<i> Hardly at all. Just send fewer bytes. All the handshaking remained  
+</I>&gt;<i> unchanged.
+</I>
+Okay.
+
+&gt;<i> It might be worthwhile to change the ADT13 handshaking so that  
+</I>&gt;<i> there needs to be only one executable on the PC side which can  
+</I>&gt;<i> determine which one is running on the apple, and which &quot;speaks&quot;  
+</I>&gt;<i> both languages.
+</I>
+Yeah, I'm thinking that maybe adding two new commands would be  
+worthwhile, to maintain backwards compatibility with 16 sector  
+transfers.  ADT currently sends 0xD2 ('R') or 0xD3 ('S') to initiate  
+a receive or send, respectively.  I was going to use 0xD4 for  
+sending .NIB disks, and maybe reserve 0xD5 for receiving .NIB disks  
+(I don't plan on supporting that right now, though).  So maybe ADT13  
+should use 0xD6 and 0xD7 for 13 sector disks?
+
+&gt;<i> On the other hand, if the nibble-based ADT becomes a reality in the  
+</I>&gt;<i> near future, all the differences between .dsk and .d13 can be  
+</I>&gt;<i> handled on the PC side anyway, and there'll be no longer a need to  
+</I>&gt;<i> run DOS 3.2 to transfer 13-sector disks.
+</I>
+The way nibble transfer will work, I think it'll still be worthwhile  
+to have ADT13.  First off, nibble transfers are much slower, since it  
+transfers one track at a time, where ADT13 will do 7.  Plus, nibble  
+transfers don't do any error checking/correction on the data.  Using  
+RWTS results in more robust disk transfers, since it uses checksums  
+and retries on each sector prolog, data, and epilog.
+
+&gt;<i> Let me make a suggestion for a future nibble ADT: I suggest  
+</I>&gt;<i> handling all sync-byte issues entirely on the PC side. Let the  
+</I>&gt;<i> Apple side just write bytes, one per 32 cycles no matter what. The  
+</I>&gt;<i> Disk II controller can only read bytes starting with a 1, but it  
+</I>&gt;<i> can write all bytes; so instead of telling it to write FF FF FF FF  
+</I>&gt;<i> FF at 40-cycle steps, one can just tell it to write FF 3F CF F3 FC  
+</I>&gt;<i> FF as standard 32-cycle bytes and the result will be the same. This  
+</I>&gt;<i> way all that bit-banging can happen on the PC, where it's probably  
+</I>&gt;<i> easier to program anyway. And this way it's also easy to implement  
+</I>&gt;<i> the ability to handle both 36-cycle and 40-cycle syncs.
+</I>
+That's a possibility.  I was planning on supporting the convention of  
+high bit clear means a 10-bit sync, and both high bit and low bit  
+clear means a 9-bit sync.  This would require some extra logic on the  
+Apple II side, but the PC side would not need to convert a byte  
+stream into a bit stream.  But this point is moot right now, since I  
+was not planning on being able to receive nibble images, only send.   
+This is mainly because the .NIB format does not keep track of sync  
+bytes, which would be needed to write the disk correctly.
+
+-Dave
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000014.html">[adt-dev] ADT13 questions
+</A></li>
+	<LI>Next message: <A HREF="000018.html">[adt-dev] ADT13 questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

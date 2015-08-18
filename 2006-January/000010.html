@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C43BAD6B9.6090309%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT Ideas</H1>
+    <B>Ed Eastman</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C43BAD6B9.6090309%40gmail.com%3E"
+       TITLE="[adt-dev] ADT Ideas">eeastman at gmail.com
+       </A><BR>
+    <I>Tue Jan  3 20:55:37 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[adt-dev] ADT Ideas
+</A></li>
+        <LI>Next message: <A HREF="000011.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Pardon mw while I catch up.  I've been busy...  Forgive any redundancies:
+
+
+Dave Dribin wrote:
+ &gt; Ed and Knut, Thanks for joining the list!
+
+Thankx for putting up a discussion list for this project.  It seems abit 
+of a shame though that we arn't using the CSA2 Programmer sig.  The 
+disussion may draw more interest.  :)
+
+Dave Dribin wrote:
+ &gt; I  think it would be better to have multiple zip files for download. 
+  &gt; I  propose one for each Apple II program, and one for each PC side
+ &gt; program.
+...
+ &gt; They just need to download 2 files, instead of one.
+
+Knut Roll-Lund wrote:
+ &gt; I think it is better for the user to get a functioning package.
+
+I would like to concur with Knut that one downlaod per platform 
+(PC/Mac/Linux/ whatever) would be more efficient and practical for those 
+who need it.  (That's right, the USERS.)
+
+Knut Roll-Lund
+ &gt; the only point I'm really going to fight for is that we use version 
+numbers so that there will be no confusion about what is what.
+
+I think the naming convention and file type convention should match the 
+platform.  ATD(date).zip, ATD(date).SHK, and ADT(dat).rar or whatever 
+for Win/Dos, Mac, and Linux respectively.  This also would allow us 
+unlimited flexibility and making sure no one is confused about which 
+version they have.  Of coursethe version number coudl easily replace the 
+date code I noted above.  (I'm easy.)
+
+Dave Dribin wrote:
+ &gt; Put All ADT Source Code Into Subversion
+
+This may be overkill after looking at the code involved, number of 
+people who are actively working on it and the likelyhood of others 
+wanting to expand the project.  But I LOVE that it will be online for 
+other to look at.
+
+Dave Dribin wrote:
+ &gt; wxWidgets is a cross-platform, open source GUI library, available for
+ &gt; Windows, Unix, and OS X.  Using wxWidgets for ADTWin would
+ &gt; automatically give use GUIs for Linux and OS X.  I've used wxWidgets
+ &gt; before, and the ADT GUI is a perfect use for it.
+
+Also at this point I'd like to point out that the OSX does not generally 
+have access to a serial port so it may be a mute thought.  (Unless it is 
+a really old G3.)
+
+Dave Dribin wrote:
+&gt;<i> This becomes confusing to the user, though.  Why should &quot;Other&quot; be  
+</I>&gt;<i> separate?  And why must we force separate ADT and SST PC-side  
+</I>&gt;<i> software?  They're 99% the same.  
+</I>...
+&gt;<i> What I was trying to get  as was that the SSC assembly code could be put into a library and  
+</I>&gt;<i> shared between ADT and SADT.
+</I>
+Great, but don't forget the 'other' two serial cards for the Apple II, 
+the IIgs serial port and the original serial card.  They woudl also ned 
+theier own library.  None of the serial port types can use each other's 
+settings or control signals.  For Eg, the SSC is the only port to 
+support 115,200b for example.  While the IIgs serial hardware should 
+support 57,600 and maybe some others fine.
+
+Knut Roll-Lund wrote:
+ &gt; I would think that if it &lt;SST and ADT&gt; can be combined seamlessly for 
+the user it can  be the same.
+
+I agree, so long as it works and is appropriately documented, the user 
+will not care if it is the same 'server' on the PC side with different 
+clients on the A2.
+
+Knut Roll-Lund wrote:
+ &gt; BTW shouldn't we invite also Linards Ticmanis &quot;ticmanis at gmx dot
+ &gt; de&quot; he has made the 13 sector ADT.
+Dave Dribin wrote:
+ &gt; Sure, go ahead
+
+Good observation, Knut, let me know if this still needs to be done.
+
+Dave Dribin wrote:
+ &gt; Hmm...  I wonder how he &lt;Lenards&gt; changed the protocol. &lt;for ADT13&gt; 
+  The file doesn't seem  to  be available on Asimov.  Too bad there is 
+no source.
+Knut Roll-lund wrote:
+ &gt; I believe it is a &quot;hacked&quot; software, so no source exists
+...
+ &gt; He seems to be active on c.s.a2.  Maybe I'll send him email.
+
+I know exactly how he most likely did this, it's an old trick with 
+demuffin.  You use the DOS 3.2 RWTS in a lower memory location.  Of 
+course I've not used ADT13 so I can't say for sure.  (Bload RWTS13, 
+Bload ADT, Patch ADT to call 3.2 RWTS. (Two bytes in IOB pointer and 
+change the sector counter code.)
+
+
+
+
+My 2cents and to catch up!
+Thankx,
+Ed
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[adt-dev] ADT Ideas
+</A></li>
+	<LI>Next message: <A HREF="000011.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

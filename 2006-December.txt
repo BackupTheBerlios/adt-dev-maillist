@@ -1,0 +1,28 @@
+From david at attglobal.net  Thu Dec 21 04:47:38 2006
+From: david at attglobal.net (David Schmidt)
+Date: Wed, 20 Dec 2006 22:47:38 -0500
+Subject: [adt-dev] Updates to ADT in 2006
+Message-ID: <458A03DA.7000500@attglobal.net>
+
+Hello, ADT dev listers -
+
+I went ahead and updated ADT with a couple of goodies (staying home with 
+chicken-pox infested kids).  I took Dave's ca65 assembler version, and 
+added IIgs support at 115.2kbps and the ability to BSAVE itself. 
+Benefits: legitimate IIgs support in one package, and no more reliance 
+on a separate BASIC configuration module.
+
+I'd like to release this as ADT_2006.  The package would be just the 
+same as ADT_2005_2, except the ssc and iigs versions would be deleted 
+with this one in its place.  So, it isn't exactly grand unification, but 
+it merges a couple of versions - and brings the IIgs version up to real 
+release status.
+
+The source is in svn now.  I've integrated this all with an Eclipse and 
+ca65-based build system (simply because it's easy for me) that produces 
+a complete .dsk image and monitor dump version as well.  I'll go ahead 
+and do the release after some more testing and a period for comments.
+
+- David Schmidt
+
+

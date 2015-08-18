@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT13 questions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT13%20questions&In-Reply-To=%3C43BD5A6C.1060106%40gmx.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000016.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT13 questions</H1>
+    <B>Linards Ticmanis</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT13%20questions&In-Reply-To=%3C43BD5A6C.1060106%40gmx.de%3E"
+       TITLE="[adt-dev] ADT13 questions">ticmanis at gmx.de
+       </A><BR>
+    <I>Thu Jan  5 18:42:04 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000016.html">[adt-dev] ADT13 questions
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[adt-dev] Files from ADT_2005_2.zip imported into Subversion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dave Dribin wrote:
+
+&gt;<i> Ahh... so it requires a DOS 3.2 floppy on the Apple II side?  Or does  
+</I>&gt;<i> it install DOS 3.2 RWTS at a lower address concurrently with DOS 3.3?
+</I>
+Instead of a long explanation, you might want to check out the version 
+as it currently stands (my work plus an improvement by &quot;Lyrical Nanoha&quot;):
+
+&gt;<i> <A HREF="http://www.dosius.net:8080/adt13-altstrap.zip">http://www.dosius.net:8080/adt13-altstrap.zip</A>
+</I>
+Just read the included &quot;README.TXT&quot;, it will make the process clear. And 
+no, you don't need to have a 13-sector disk already available at the 
+beginning.
+
+&gt;<i> Okay, cool.  Hopefully we can integrate this into the source code in  
+</I>&gt;<i> the future.  That will make sure updates, like 115K, get included.
+</I>
+I'll have to look through the binary again myself I fear and produce an 
+updated version of the assembly source.
+
+&gt;<i> Yeah, I'm thinking that maybe adding two new commands would be  
+</I>&gt;<i> worthwhile, to maintain backwards compatibility with 16 sector  
+</I>&gt;<i> transfers.  ADT currently sends 0xD2 ('R') or 0xD3 ('S') to initiate  a 
+</I>&gt;<i> receive or send, respectively.  I was going to use 0xD4 for  sending 
+</I>&gt;<i> .NIB disks, and maybe reserve 0xD5 for receiving .NIB disks  (I don't 
+</I>&gt;<i> plan on supporting that right now, though).
+</I>
+I'd be interested in tackling this at some point. I have very few 
+original disks so the NIB-to-PC transfer is of little interest to me. On 
+the other hand I like to run stuff on the real hardware; for this NIB is 
+a real show-stopper until now.
+
+&gt;<i>  So maybe ADT13  should use 
+</I>&gt;<i> 0xD6 and 0xD7 for 13 sector disks?
+</I>
+Should be a small change and easily possible. On the Apple side a 
+unified executable doesn't make that much sense, since it relies on the 
+underlying DOS anyway; ADT13 must reside on a 13-sector disk and 
+16-sector ADT must reside on a 16-sector disk as things stand. But on 
+the PC side this change would allow a unified executable.
+
+&gt;<i> The way nibble transfer will work, I think it'll still be worthwhile  to 
+</I>&gt;<i> have ADT13.  First off, nibble transfers are much slower, since it  
+</I>&gt;<i> transfers one track at a time, where ADT13 will do 7.
+</I>
+Why? A nibble ADT could overwrite DOS, and thus have all the memory from 
+$0800 to $BFFF at its disposal. At $1A00 bytes per track this is still 
+enough for 7 tracks. Subtract the space used by the code itself, and 6 
+tracks should fit into memory.
+
+&gt;<i> Plus, nibble  
+</I>&gt;<i> transfers don't do any error checking/correction on the data.
+</I>
+Well... they don't do it unless you code it in. ;-)
+
+&gt;<i> Using  
+</I>&gt;<i> RWTS results in more robust disk transfers, since it uses checksums  and 
+</I>&gt;<i> retries on each sector prolog, data, and epilog.
+</I>
+But of course checksuming and retrying can be hand-coded into a nibble 
+transfer. It's more work though, I'll concur with that.
+
+&gt;<i> That's a possibility.  I was planning on supporting the convention of  
+</I>&gt;<i> high bit clear means a 10-bit sync, and both high bit and low bit  clear 
+</I>&gt;<i> means a 9-bit sync.
+</I>
+That has the problem that there might exist 10-bit syncs with the low 
+bit clear as well as set; and also 9-bit syncs with both kinds of low bits.
+
+I believe if one really wants to transfer a reliable, complete 
+bit-stream off the disk, one must read the track several times anyway, 
+since variations in disk speed can get sync bytes to seemingly appear or 
+disappear at random during a read. Only way to be sure is to read 
+several times and compare.
+
+&gt;<i>  But this point is moot right now, since I  was not planning 
+</I>&gt;<i> on being able to receive nibble images, only send. This is mainly 
+</I>&gt;<i> because the .NIB format does not keep track of sync  bytes, which would 
+</I>&gt;<i> be needed to write the disk correctly.
+</I>
+Yes, .NIB is a stinker. Isn't there a better, newer nibble-based format 
+already out there that preserves sync bytes and track lenghts? The most 
+versatile way to me seems to be: treating the track simply as a sequence 
+of bits of a certain lenght, and sorting out syncs by simulating the way 
+the woz machine itself works. You can always convert the stuff to .NIB 
+after-the-fact if you absolutely need this format.
+
+In the PC-to-Apple direction, the only way to deal with .NIB is to use a 
+couple of heuristics to guess which bytes are sync bytes.
+
+-- 
+Linards Ticmanis
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000016.html">[adt-dev] ADT13 questions
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[adt-dev] Files from ADT_2005_2.zip imported into Subversion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

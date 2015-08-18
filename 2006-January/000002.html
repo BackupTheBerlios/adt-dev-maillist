@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3CBD7F2CF5-4555-49CF-AB69-F9BF1063FE28%40dribin.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000001.html">
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT Ideas</H1>
+    <B>Dave Dribin</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3CBD7F2CF5-4555-49CF-AB69-F9BF1063FE28%40dribin.org%3E"
+       TITLE="[adt-dev] ADT Ideas">dave-ml at dribin.org
+       </A><BR>
+    <I>Mon Jan  2 16:22:54 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000001.html">[adt-dev] Re: adt-dev -- confirmation of subscription -- request 807393
+</A></li>
+        <LI>Next message: <A HREF="000003.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ed and Knut,
+
+Thanks for joining the list!  I've been following ADT development for  
+the last month or so, since I've been developing an ADT/SST merger.   
+Given that there is now fairly active development going on between  
+the 3 of us, here are some ideas I've been thinking about that will  
+help us work together and coordinate our efforts:
+
+Splitting ADT_XXXX.zip into multiple files
+==========================================
+
+The current method of distribution, by that I mean files like  
+ADT_2005_2.zip, is confusing and inflexible.  It's confusing for the  
+user, since it's hard to tell which version of ADT is included.  Is  
+it 1.23?  Or 1.21?  It's a pain for developers to release new  
+versions.  If a new version of ADTWin needs to be released, why  
+include all the other components that have not changes?  Thus, I  
+think it would be better to have multiple zip files for download.  I  
+propose one for each Apple II program, and one for each PC side  
+program.  Given the current versions of the components as of today,  
+this would result in the following zip files:
+
+Apple II components:
+
+- adt-ssc-1.23.zip: Contains SSC version of adt.dmp (with 115K  
+support) and source code.
+
+- adt-cc-1.21.zip: Contains ADTcc.dmp and code.
+
+- adt-gs-0.91.zip: Contains ADTgs.dmp.
+
+PC components:
+
+- adt123.zip: Contains adtdos.exe (with 115K support).
+
+- adt-win-1.23.2.zip: Contains adtwin.exe (with 115K support and long  
+file name fixes).
+
+Doing a split like this makes it easier to do updates like the ones  
+recently done by Knut and my SST updates.  It also makes it easier to  
+put this code into a source code repository, like Subversion.  Which  
+leads me to:
+
+Put All ADT Source Code Into Subversion
+=======================================
+
+Using a source code control tool like Subversion or CVS is nearly  
+essential when multiple developers are involved.  Without them,  
+people are constantly overwriting other's changes.
+
+I've been using Subversion a lot at my &quot;real job&quot; and it's awesome.   
+This is why I chose BerliOS, too.
+
+Using a Cross Assembler for Apple II Software
+=============================================
+
+The code for ADTssc and ADTcc are in Merlin assembler.  I think  
+converting these to a cross assembler so that developement code be  
+done on a PC/Mac has number of advantages:
+
+- Faster: Running an assembler on modern hardware is *fast*.
+
+- Easier: I can use a modern text editor.
+
+- More flexible: Modern assemblers allow splitting programs into  
+multiple files and have the concept of &quot;libraries&quot;.  Multiple files  
+also help when multiple developers are involved.
+
+- Makes some debugging easier: I can assembly on my PC/Mac and then  
+run the binary in an emulator.
+
+I've already converted adt.asm into an assembly file that is usable  
+by ca65, which is the assembler component of cc65:
+
+   <A HREF="http://www.cc65.org/">http://www.cc65.org/</A>
+
+Redesign of PC-Side Software
+============================
+
+There are currently two &quot;official&quot; PC-side programs: adtdos.exe and  
+adt.exe.  Unfortunately, there is very little code sharing between  
+them.  And this also excludes other platforms like Linux and Mac OS  
+X.  The current code is currently not flexible enough to support this  
+kind of abstraction.  It really needs to be completely restructured  
+from scratch.
+
+For my ADT/SST merger, I've already done a fair amount of this  
+restructuring.  One major change I did was to use C++ instead of C.   
+All platforms we're targeting, including DOS, have good C++ compilers  
+available.  C++ provides a lot more flexibility on code structure in  
+my opinion, so I sort of made an executive decision to use it over  
+C.  Also, using C++ will help us implement my next idea:  I'd also  
+like ADTWin to use wxWidgets for it's GUI:
+
+   <A HREF="http://www.wxwidgets.org/">http://www.wxwidgets.org/</A>
+
+wxWidgets is a cross-platform, open source GUI library, available for  
+Windows, Unix, and OS X.  Using wxWidgets for ADTWin would  
+automatically give use GUIs for Linux and OS X.  I've used wxWidgets  
+before, and the ADT GUI is a perfect use for it.
+
+Conclusion
+==========
+
+Okay, I know this is a lot of information.  If you manage to read all  
+this, please let me know what you think.
+
+-Dave
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000001.html">[adt-dev] Re: adt-dev -- confirmation of subscription -- request 807393
+</A></li>
+	<LI>Next message: <A HREF="000003.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

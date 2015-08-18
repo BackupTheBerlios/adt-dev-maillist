@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> SV: [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20SV%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3CF4D51139-3603-4BC7-BCF6-C76C0F625B0E%40dribin.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000013.html">
+   <LINK REL="Next"  HREF="000019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>SV: [adt-dev] ADT Ideas</H1>
+    <B>Dave Dribin</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20SV%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3CF4D51139-3603-4BC7-BCF6-C76C0F625B0E%40dribin.org%3E"
+       TITLE="SV: [adt-dev] ADT Ideas">dave-ml at dribin.org
+       </A><BR>
+    <I>Thu Jan  5 17:37:16 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000013.html">SV: [adt-dev] ADT Ideas
+</A></li>
+        <LI>Next message: <A HREF="000019.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 5, 2006, at 4:26 AM, Knut Roll-lund wrote:
+&gt;<i> I couldn't get subversion to work, it didn't compile. It is normal  
+</I>&gt;<i> to distribute executables for PC/windows, because there is a wide  
+</I>&gt;<i> range of compilers and libraries.
+</I>
+They do offer executables for Windows.  There's even an installer:
+
+   <A HREF="http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91">http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91</A>
+
+That said, I would highly recommend TortoiseSVN instead:
+
+   <A HREF="http://tortoisesvn.tigris.org/">http://tortoisesvn.tigris.org/</A>
+
+It does require Win2k or XP, but it integrates very nicely into the  
+Windows shell (Explorer).  There is a binary download for this, too.
+
+&gt;<i> It seemed that I had the right compiler for windows but it failed  
+</I>&gt;<i> with syntax error. This is probably exactly my point about cross- 
+</I>&gt;<i> platform development.
+</I>
+I wouldn't extrapolate so far from just this one data point. :)  I  
+think Subversion is a good example of cross platform code, actually.   
+Most of the source is shared between platforms and (should) compile  
+on just about every flavor of Unix (including Linux and OS X) as well  
+as Windows.
+
+Developing on Windows when a project depends on many 3rd party  
+libraries is always tricky in my experience, which Subversion does.   
+It's hard to make sure everyone is in sync with the same versions and  
+the paths are setup appropriately.  ADT will be far simpler, since it  
+will have few other dependencies (wxWidgets, being the only one I am  
+planning on using).  Subversion can actually help with this, too, by  
+checking in the binaries for dependent libraries.
+
+If you really want to realize the full benefit of Subversion, I'd  
+recommend Pragmatic Version Control Using Subversion:
+
+   <A HREF="http://www.pragmaticprogrammer.com/titles/svn/index.html">http://www.pragmaticprogrammer.com/titles/svn/index.html</A>
+
+But I'll be handling all Subversion administration, since I'm quite  
+familiar with it.  That book is just recommended if you want to learn  
+more.
+
+-Dave
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000013.html">SV: [adt-dev] ADT Ideas
+</A></li>
+	<LI>Next message: <A HREF="000019.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>

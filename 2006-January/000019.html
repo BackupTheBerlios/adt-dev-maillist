@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [adt-dev] ADT Ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/adt-dev/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C43BD5F9C.4050303%40online.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[adt-dev] ADT Ideas</H1>
+    <B>Knut Roll-Lund</B> 
+    <A HREF="mailto:adt-dev%40lists.berlios.de?Subject=Re%3A%20%5Badt-dev%5D%20ADT%20Ideas&In-Reply-To=%3C43BD5F9C.4050303%40online.no%3E"
+       TITLE="[adt-dev] ADT Ideas">kr-lund at online.no
+       </A><BR>
+    <I>Thu Jan  5 19:04:12 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">SV: [adt-dev] ADT Ideas
+</A></li>
+        <LI>Next message: <A HREF="000020.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dave Dribin wrote:
+
+&gt;<i> On Jan 5, 2006, at 4:26 AM, Knut Roll-lund wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I couldn't get subversion to work, it didn't compile. It is normal  
+</I>&gt;&gt;<i> to distribute executables for PC/windows, because there is a wide  
+</I>&gt;&gt;<i> range of compilers and libraries.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> They do offer executables for Windows.  There's even an installer:
+</I>&gt;<i>
+</I>&gt;<i>   <A HREF="http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91">http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91</A>
+</I>&gt;<i>
+</I>&gt;<i> That said, I would highly recommend TortoiseSVN instead:
+</I>&gt;<i>
+</I>&gt;<i>   <A HREF="http://tortoisesvn.tigris.org/">http://tortoisesvn.tigris.org/</A>
+</I>&gt;<i>
+</I>&gt;<i> It does require Win2k or XP, but it integrates very nicely into the  
+</I>&gt;<i> Windows shell (Explorer).  There is a binary download for this, too.
+</I>
+
+I wonder why I failed to see those yesterday... sorry. Anyway I took 
+your advice and got tortoisesvn instead, thanks. Actually I use command 
+line quite a lot with windows since I use TotalCommander (previously 
+wincmd). It is very convenient instead of using the start-menu (several 
+levels in to it). And many programs accept commandline arguments, 
+winmerge is a good example.
+
+&gt;&gt;<i> It seemed that I had the right compiler for windows but it failed  
+</I>&gt;&gt;<i> with syntax error. This is probably exactly my point about cross- 
+</I>&gt;&gt;<i> platform development.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I wouldn't extrapolate so far from just this one data point. :)  I  
+</I>&gt;<i> think Subversion is a good example of cross platform code, actually.   
+</I>&gt;<i> Most of the source is shared between platforms and (should) compile  
+</I>&gt;<i> on just about every flavor of Unix (including Linux and OS X) as well  
+</I>&gt;<i> as Windows.
+</I>&gt;<i>
+</I>&gt;<i> Developing on Windows when a project depends on many 3rd party  
+</I>&gt;<i> libraries is always tricky in my experience, which Subversion does.   
+</I>&gt;<i> It's hard to make sure everyone is in sync with the same versions and  
+</I>&gt;<i> the paths are setup appropriately.  ADT will be far simpler, since it  
+</I>&gt;<i> will have few other dependencies (wxWidgets, being the only one I am  
+</I>&gt;<i> planning on using).  Subversion can actually help with this, too, by  
+</I>&gt;<i> checking in the binaries for dependent libraries.
+</I>&gt;<i>
+</I>&gt;<i> If you really want to realize the full benefit of Subversion, I'd  
+</I>&gt;<i> recommend Pragmatic Version Control Using Subversion:
+</I>&gt;<i>
+</I>&gt;<i>   <A HREF="http://www.pragmaticprogrammer.com/titles/svn/index.html">http://www.pragmaticprogrammer.com/titles/svn/index.html</A>
+</I>&gt;<i>
+</I>&gt;<i> But I'll be handling all Subversion administration, since I'm quite  
+</I>&gt;<i> familiar with it.  That book is just recommended if you want to learn  
+</I>&gt;<i> more.
+</I>
+
+We use Visual Source Safe at work. I like winzip combined with winmerge, 
+zipping up a backup of the project once in a while, and later if I want 
+to go back I use winmerge to find differences. But then again I'm pretty 
+tidy. I work with programming too and it is important to me that my 
+hobby programming doesn't &quot;taste&quot; like work. :-)
+
+Knut
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">SV: [adt-dev] ADT Ideas
+</A></li>
+	<LI>Next message: <A HREF="000020.html">[adt-dev] ADT Ideas
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/adt-dev">More information about the adt-dev
+mailing list</a><br>
+</body></html>
